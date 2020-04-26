@@ -1,0 +1,138 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.bg {
+    display: table;
+    width: 100%;
+    height: 100vh;
+    padding: 100px 0;
+    color: white;
+    background: url('../img/background-login.jpg') no-repeat bottom center scroll;
+    background-position: 30% 45%;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.card-login {
+    border: 10px solid #ffffff96;
+    border-radius: 400px;
+    -webkit-border-radius: 400px;
+    -moz-border-radius: 400px;
+    height: 450px;
+    margin-top: 17vh;
+}
+
+.card-user {
+    border: 10px solid #246598;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    height: 450px;
+}
+
+.flex-a {
+    display: flex;
+    justify-content: space-around;
+}
+
+.flex-b {
+    display: flex;
+    justify-content: space-between;
+}
+
+.flex-e {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.flex-s {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.text-blue {
+    color: #246598;
+}
+
+.text-gray {
+    color: #91908f;
+}
+
+.text-green {
+    color: #488f3f;
+}
+
+.btn-login {
+    border: 2px solid white;
+}
+
+.btn-login:hover {
+    background-color: #246598;
+    border: 2px solid white;
+}
+
+.bg-blue {
+    background-color: #9ee2d7 !important;
+}
+
+.fs-20 {
+    font-size: 20px;
+}
+
+.fs-18 {
+    font-size: 18px;
+}
+
+.fs-12 {
+    font-size: 12px;
+}
+
+.nav-item {
+    font-weight: bold;
+}
+
+.fs-8 {
+    font-size: 8px;
+}
+
+.navbar-img {
+    width: 25px;
+    height: 25px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.text-rookie {
+    color: #de47bc !important;
+}
+
+.bg-rookie {
+    background-color: #de47bc !important;
+}
+
+.char {
+    width: 100px;
+    height: 100px;
+}
+
+.pb {
+    height: 8px !important;
+    width: 80% !important;
+}
+
+.trophy-size {
+    width: 34px;
+    height: 34px;
+}
+
+.badge-size {
+    width: 44px;
+    height: 44px;
+}
