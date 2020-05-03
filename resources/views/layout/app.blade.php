@@ -34,8 +34,6 @@
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="../assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="../assets/demo/demo.css" rel="stylesheet" />
-  <link href="../assets/css/chat.css" rel="stylesheet" />
   <link href="../assets/css/style.css" rel="stylesheet" />
  
    <!--   Core JS Files   -->
@@ -78,7 +76,7 @@
                     <div class="collapse navbar-collapse" id="navbar" data-nav-image="assets/img/blurred-image-1.jpg">
                         <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/dashboard">
+                            <a class="nav-link" href="/manager">
                             <p>Home</p>
                             </a>
                         </li>
@@ -99,7 +97,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/profile">
-                            <p><img class="navbar-img" src="./assets/img/avatar/avatar-pikachu.png"></p>
+                            <p><img class="navbar-img" src="./assets/img/avatar/pumpkin.png"></p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -129,8 +127,47 @@
         <main>
             <h2 align="center" style="text-transform: uppercase" class="text-orange">@yield('title')</h2>
             <div align="center" style="font-size:16px;"  id="page-alert"></div>
+            @auth
+            <div class="container">
+            <div class="row" style="margin-top:80px">
+            <div class="col-lg-3 col-md-12 col-sm-12 col-12 mb-5">
+                <div>
+                    <div class="card-user">
+                        <div align="center" class="text-rookie mt-2 bold">Rookie</div>
+                        <div align="center" class="mt-2 bold">Desenvolvedor Backend</div>
+                        <div align="center" class="mt-2 bold">Iago</div>
+                        <div class="flex-a">
+                            <div align="center" class="mt-3 mb-3 char"><img src="../assets/img/char/pumpkin.png"></div>
+                        </div>
+                        <div class="mt-4">
+                            <div align="center" class="progress-container col-12">
+                                <span class="progress-badge text-rookie">37pts</span>
+                                <div class="progress mt-0 pb">
+                                    <div class="progress-bar progress-bar-striped bg-rookie" role="progressbar" aria-valuenow="37" aria-valuemin="0" aria-valuemax="100" style="width: 37%;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-a mt-4">
+                            <div>
+                                <span align="center" ><img class="trophy-size" src="../assets/img/icons/trophy.png"><span class="bold fs-18"> 2º </span></span>
+                            </div>
+                        </div>
+                        <div class="flex-a mt-4">
+                            <div class="badges">
+                                <span align="center" ><img class="badge-size mx-1" src="../assets/img/badges/php.png"></span>
+                                <span align="center" ><img class="badge-size mx-1" src="../assets/img/badges/go.png"></span>
+                                <span align="center" ><img class="badge-size mx-1" src="../assets/img/badges/python.png"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1 col-md-12 col-1"></div>
+            @endauth
             @yield('content')
-
+            </div>
+            </div>
         </div>
     </main>
 

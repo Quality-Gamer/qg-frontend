@@ -15,3 +15,6 @@ Route::get('/', 'HomeController@index');
 Route::get('/login', 'HomeController@login');
 Route::post('/login', 'HomeController@login');
 Route::post('/logout', 'HomeController@logout');
+Route::get('/logout', 'HomeController@logout');
+Route::get('/manager', 'ManagerController@index');
+Route::post('/manager', 'ManagerController@index');

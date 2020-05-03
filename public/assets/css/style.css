@@ -136,3 +136,190 @@
     width: 44px;
     height: 44px;
 }
+
+.bg-lg-green {
+    background-color: #9ee2d791;
+}
+
+.title-page {
+    color: #246598;
+    font-weight: bold;
+    font-size: 35px;
+}
+
+.card-default {
+    min-height: 375px;
+    height: auto;
+}
+
+.svg-width {
+    width: 70px;
+    margin-right: 10px;
+}
+
+.btn-green {
+    background-color: #488f3f;
+    border-color: #488f3f;
+}
+
+.btn-blue {
+    background-color: #246598;
+    border-color: #246598;
+}
+
+.btn-pink {
+    background-color: #de47bc;
+    border-color: #de47bc;
+}
+
+.title-card {
+    color: #246598;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+.badge-blue {
+    background-color: #246598;
+    border-color: #246598;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.badge-transparent {
+    background-color: transparent;
+    border-color: #246598d4;
+    color: #246598;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.text-svg {
+    width: 200px;
+    font-size: 24px;
+}
+
+.badge-button {
+    height: 50px;
+    border-radius: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 9px;
+    padding-top: 17px;
+    width: 75px;
+    cursor: pointer;
+}
+
+.img-btn {
+    background-color: transparent;
+}
+
+.next-week-btn {
+    color: #246598;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+button.btn.img-btn.next-week-btn:hover {
+    background-color: #246598;
+}
+
+.btn-close {
+    float: right;
+    color: red;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.pos-close {
+    position: relative;
+    bottom: 10px;
+}
+
+.list-item {
+    text-transform: uppercase;
+    font-size: 85%;
+    margin-left: 10px;
+}
+
+.card-manager {
+    min-height: 360px;
+    height: auto;
+    position: relative;
+    bottom: 30px;
+}
+
+.icon-manager {
+    width: 30px;
+    height: 30px;
+}
+
+.manager-title {
+    font-weight: bold;
+    position: relative;
+    top: 3px;
+}
+
+.minimize-icon {
+    height: 20px;
+    width: 30px;
+    margin-left: 10px;
+}
+
+.minimize-text {
+    font-size: 10px;
+    font-weight: bold;
+    margin-left: 5px;
+    margin-top: 3px;
+    width: 100%;
+}
+
+.minimize-icon-done {
+    height: 18px;
+    width: 18px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.minimize-icon-clock {
+    width: 20px;
+    height: 20px;
+    margin-left: 15px;
+}
+
+.title-manager {
+    position: relative;
+    bottom: 20px;
+}
+
+.text-red {
+    color: red !important;
+}
+
+.bg-red {
+    background-color: red !important;
+}
+
+.f-l {
+    float: left;
+}
+
+.f-r {
+    float: right;
+}
+
+.card-oc {
+    background-color: #c5e29ec2;
+    height: 100px;
+    text-align: start;
+    overflow-y: scroll;
+    overflow-x: hidden !important;
+}
+
+.font-bold {
+    font-weight: bold;
+}
