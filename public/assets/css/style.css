@@ -33,6 +33,7 @@
     -webkit-border-radius: 15px;
     -moz-border-radius: 15px;
     height: 450px;
+    margin-top: 40px;
 }
 
 .flex-a {
@@ -65,6 +66,10 @@
 
 .text-green {
     color: #488f3f;
+}
+
+.bg-green {
+    background-color: #488f3f !important;
 }
 
 .btn-login {
@@ -148,7 +153,7 @@
 }
 
 .card-default {
-    min-height: 375px;
+    min-height: 420px;
     height: auto;
 }
 
@@ -247,7 +252,7 @@ button.btn.img-btn.next-week-btn:hover {
 }
 
 .card-manager {
-    min-height: 360px;
+    min-height: 260px;
     height: auto;
     position: relative;
     bottom: 30px;
@@ -322,4 +327,64 @@ button.btn.img-btn.next-week-btn:hover {
 
 .font-bold {
     font-weight: bold;
+}
+
+.loading-1 {
+    transform: rotateZ(30deg);
+}
+
+.loading-2 {
+    transform: rotateZ(60deg);
+}
+
+.loading-3 {
+    transform: rotateZ(90deg);
+}
+
+.loading-4 {
+    transform: rotateZ(1200deg);
+}
+
+.loading-5 {
+    transform: rotateZ(150deg);
+}
+
+.loading-6 {
+    transform: rotateZ(180deg);
+}
+
+.loading-7 {
+    transform: rotateZ(210deg);
+}
+
+.loading-8 {
+    transform: rotateZ(240deg);
+}
+
+.loading-9 {
+    transform: rotateZ(270deg);
+}
+
+.loading-10 {
+    transform: rotateZ(300deg);
+}
+
+.loading-11 {
+    transform: rotateZ(330deg);
+}
+
+.loading-12 {
+    transform: rotateZ(360deg);
+}
+
+.text-project {
+    text-align: justify;
+}
+
+.bg-navy-blue {
+    background-color: #246598 !important;
+}
+
+.text-navy-blue {
+    color: #246598;
 }

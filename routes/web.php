@@ -18,3 +18,4 @@ Route::post('/logout', 'HomeController@logout');
 Route::get('/logout', 'HomeController@logout');
 Route::get('/manager', 'ManagerController@index');
 Route::post('/manager', 'ManagerController@index');
+Route::get('/manager/reset', 'ManagerController@reset');
