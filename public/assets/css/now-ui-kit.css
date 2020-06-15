@@ -6533,7 +6533,7 @@ img {
         transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
     }
     .sidebar-collapse .navbar-collapse:before {
-        background-color: #246498;
+        background-color: #9ee2d7;
         /* Standard syntax (must be last) */
         opacity: 0.76;
         filter: alpha(opacity=76);
