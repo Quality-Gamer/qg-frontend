@@ -11,17 +11,24 @@ class HomeController extends Controller
     public function login(Request $request){
         $email = $request->input('email');
         $password = $request->input('password');
-        $url = config('microsservices.usuario.login');
-        $params = ["email" => $email, "password" => $password];
+        $url = config('microsservices.gateway');
+        $params = array(
+            "ms" => "user",
+            "action" => "login",
+            "params" => array("email" => $email, "password" => $password),
+            "method" => "POST",
+            "cacheable" => 0,
+        );
+        
         $response = APIService::postHttpRequest($url,$params);
-
+        $body = $response["body"]->response;
         $data = array();
 
-        if(isset($response["body"]->response->name) && isset($response["body"]->response->email)){
+        if(isset($body->response->name) && isset($body->response->email)){
             $user = new \App\User;
-            $user->name = $response["body"]->response->name;
-            $user->email = $response["body"]->response->email;
-            $user->id = $response["body"]->response->id;
+            $user->name = $body->response->name;
+            $user->email = $body->response->email;
+            $user->id = $body->response->id;
             $request->session()->put('user', $user);
             Auth::login($user);
         } else {

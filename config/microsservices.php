@@ -9,7 +9,8 @@ return [
     'manager' => [
         'create' => 'http://localhost:8002/api/create',
         'find' => 'http://localhost:8002/api/find',
-    ]
+    ],
+    'gateway' => 'http://localhost:8005/gateway/route',
 ]
 
   

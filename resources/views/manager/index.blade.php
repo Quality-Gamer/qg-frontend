@@ -143,7 +143,7 @@
         <?php } ?>
 
         <?php if(isset($message)) {?>
-            alert(<?php echo $message?>);
+            alert("<?php echo $message?>");
         <?php } ?>
 
         arrayName = new Map();
@@ -171,12 +171,15 @@
 
     const changeToManager = () => {
         if(!load){
-            var url = "http://localhost:8002/api/store";
             
             $.ajax({
-                method: "GET",
-                url: url,
-                data: {}
+                method: "POST",
+                url: "<?php echo $url ?>",
+                headers: {
+                    'Content-Type' : 'application/json',
+                    'api-key': 'KUpATmNSZlVqWG4ycjV1OHgvQT9EKEctS2FQZFNnVms='
+                },
+                data: {ms: "manager", action: "store"},
             }).done( r => {
                 var i = r.response[0];
                 appendItem("bk",i.bk);
@@ -206,11 +209,14 @@
     };
 
     const changeToProject = () => {
-        var url = "http://localhost:8002/api/find";
         $.ajax({
-            method: "GET",
-            url: url,
-            data: { user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>' }
+            method: "POST",
+            url: "<?php echo $url ?>",
+            headers: {
+                    'Content-Type' : 'application/json',
+                    'api-key': 'KUpATmNSZlVqWG4ycjV1OHgvQT9EKEctS2FQZFNnVms='
+                },
+            data: { ms: "manager", action: "find", params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>'} }
         }).done( r => {
             var res = r.response[0];
             var t = res.team;
@@ -238,7 +244,7 @@
                 });
             }
 
-            var progress = Math.round(res.progress);
+            var progress = Math.round(res.progress * 100);
 
             updateStatus(res.progress_status, progress);
             
@@ -378,11 +384,14 @@
     }
 
     const buyItem = (key,price,type) => {
-        var url = "http://localhost:8002/api/transaction";
         $.ajax({
-            method: "GET",
-            url: url,
-            data: { user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>', item: key, type: type }
+            method: "POST",
+            url: "<?php echo $url?>",
+            headers: {
+                    'Content-Type' : 'application/json',
+                    'api-key': 'KUpATmNSZlVqWG4ycjV1OHgvQT9EKEctS2FQZFNnVms='
+                },
+            data: { ms: "manager", action: "transaction", params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>', item: key, type: type}}
         }).done( r => {
            var res = r.response[0];
            console.log(res);
@@ -401,11 +410,14 @@
     }
 
     const updateAmount = () => {
-        var url = "http://localhost:8002/api/find";
         $.ajax({
-            method: "GET",
-            url: url,
-            data: { user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>' }
+            method: "POST",
+            url: "<?php echo $url ?>",
+            headers: {
+                    'Content-Type' : 'application/json',
+                    'api-key': 'KUpATmNSZlVqWG4ycjV1OHgvQT9EKEctS2FQZFNnVms='
+                },
+            data: { ms: "manager", action: "find", params: {msuser_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>' }}
         }).done( r => {
             var idm = "#money-project";
             var idc = "#clock-project";
@@ -453,24 +465,33 @@
             return;
         }
 
-        var url = "http://localhost:8002/api/next";
         $.ajax({
-            method: "GET",
-            url: url,
-            data: { user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>'}
+            method: "POST",
+            url: "<?php echo $url?>",
+            headers: {
+                    'Content-Type' : 'application/json',
+                    'api-key': 'KUpATmNSZlVqWG4ycjV1OHgvQT9EKEctS2FQZFNnVms='
+                },
+            data: { ms: "manager", action: "next", params:{user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>'}}
         }).done( r => {
             var res = r.response[0];
-            updateWeekInView(res.week);
+            updateWeekInView(res.week,res.money,res.time);
         }).fail( (err) => {
             console.log(err);
         });
     }
 
-    const updateWeekInView = week => {
+    const updateWeekInView = (week,value,time) => {
         var old = week - 1;
         var html = "<h2 class=\"title-card clear-week\">Semana " + week + "</h2>";
         var id = "#week-badge-" + week;
         $(".clear-week").remove();
+        $(".clear-amount").remove();
+        var h1 = "<div class=\"clear-amount\">" + value + "</div>";
+        var h2 = "<div class=\"clear-amount\">" + time + "</div>";
+
+        $("#money-project").append(h1);
+        $("#clock-project").append(h2);
         $(id).removeClass("badge-transparent");
         $(id).addClass("badge-blue");
         $("#week-title").append(html);

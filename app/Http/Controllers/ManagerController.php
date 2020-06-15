@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class ManagerController extends Controller
 {
     public function index(Request $request){
+        $url = config('microsservices.gateway');
         if($request->session()->has('user')){
             $user = new \App\User;
             $user->id = $request->session()->get('user')['id'];
@@ -20,14 +21,22 @@ class ManagerController extends Controller
             $data["week"] = 1;
 
             if(!$request->session()->get('manager_id')){
-                $url = config('microsservices.manager.create');
-                $url .= "?user_id=" . $user->id;
-                $url .= "&challenge_id=1";
+                $params = array(
+                    "ms" => "manager",
+                    "action" => "create",
+                    "params" => array(
+                    "user_id" => (string)$user->id,
+                    "challenge_id" => "1",
+                    ),
+                    "method" => "GET",
+                    "cacheable" => 0,
+                );
                 
-                $response = APIService::getHttpRequest($url);
-
-                if($response["body"] && $response["body"]->status == "OK"){
-                    $r = $response["body"]->response[0];
+                $response = APIService::postHttpRequest($url,$params);
+                $body = $response["body"]->response;
+                
+                if($body && $body->status == "OK"){
+                    $r = $body->response[0];
                     $managerId = $r->id;
                     $request->session()->put('manager_id', $managerId);
                     $data["new"] = 1;
@@ -39,13 +48,20 @@ class ManagerController extends Controller
 
             if($request->session()->get('manager_id')){
                 $data["manager_id"] = $request->session()->get('manager_id');
-                $u = config('microsservices.manager.find');
-                $u .= "?user_id=" . $user->id;
-                $u .= "&manager_id=" . $data["manager_id"];
+                
+                $p = array(
+                    "ms" => "manager",
+                    "action" => "find",
+                    "params" => array(
+                    "user_id" => (string)$user->id,
+                    "manager_id" => (string)$data["manager_id"]
+                    ),
+                );
                     
-                $resp = APIService::getHttpRequest($u);
-                if($resp["body"] && $resp["body"]->status == "OK"){
-                    $res = $resp["body"]->response[0];
+                $resp = APIService::postHttpRequest($url,$p);
+                $body = $resp["body"]->response;
+                if($body && $body->status == "OK"){
+                    $res = $body->response[0];
                     $week = $res->week;
                     $data["week"] = $week;
                 } else {
@@ -55,6 +71,7 @@ class ManagerController extends Controller
                 $data["message"] = "Erro ao conectar com o servidor.";
             }
             
+            $data["url"] = config('microsservices.gateway');
             Auth::login($user);
             return view("manager.index",$data);
         }
