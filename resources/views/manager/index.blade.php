@@ -178,7 +178,8 @@
                 crossDomain: true,
                 headers: {
                     'Content-Type' : 'application/json',
-                    'api-key': "<?php echo $key?>"
+                    'api-key': "<?php echo $key?>",
+                    'Access-Control-Allow-Origin': 'http://qg-frontend.herokuapp.com/'
                 },
                 data: {ms: "manager", action: "store"},
             }).done( r => {
@@ -216,7 +217,8 @@
             crossDomain: true,
             headers: {
                     'Content-Type' : 'application/json',
-                    'api-key': "<?php echo $key?>"
+                    'api-key': "<?php echo $key?>",
+                    'Access-Control-Allow-Origin': 'http://qg-frontend.herokuapp.com/'
                 },
             data: { ms: "manager", action: "find", params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>'} }
         }).done( r => {
@@ -392,7 +394,8 @@
             crossDomain: true,
             headers: {
                     'Content-Type' : 'application/json',
-                    'api-key': "<?php echo $key?>"
+                    'api-key': "<?php echo $key?>",
+                    'Access-Control-Allow-Origin': 'http://qg-frontend.herokuapp.com/'
                 },
             data: { ms: "manager", action: "transaction", params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>', item: key, type: type}}
         }).done( r => {
@@ -419,7 +422,8 @@
             crossDomain: true,
             headers: {
                     'Content-Type' : 'application/json',
-                    'api-key': "<?php echo $key?>"
+                    'api-key': "<?php echo $key?>",
+                    'Access-Control-Allow-Origin': 'http://qg-frontend.herokuapp.com/'
                 },
             data: { ms: "manager", action: "find", params: {msuser_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>' }}
         }).done( r => {
@@ -475,7 +479,8 @@
             crossDomain: true,
             headers: {
                     'Content-Type' : 'application/json',
-                    'api-key': "<?php echo $key?>"
+                    'api-key': "<?php echo $key?>",
+                    'Access-Control-Allow-Origin': 'http://qg-frontend.herokuapp.com/'
                 },
             data: { ms: "manager", action: "next", params:{user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>'}}
         }).done( r => {
