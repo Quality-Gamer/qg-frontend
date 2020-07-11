@@ -176,9 +176,9 @@
                 method: "POST",
                 url: "<?php echo $url ?>",
                 crossDomain: true,
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                    xhr.setRequestHeader("api-key", "<?php echo $key?>");
+                headers: {
+                    'Content-Type' : 'application/json',
+                    'api-key': "<?php echo $key?>"
                 },
                 data: {ms: "manager", action: "store"},
             }).done( r => {
@@ -215,9 +215,9 @@
             method: "POST",
             url: "<?php echo $url ?>",
             crossDomain: true,
-            beforeSend: function(xhr) {
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                    xhr.setRequestHeader("api-key", "<?php echo $key?>");
+            headers: {
+                    'Content-Type' : 'application/json',
+                    'api-key': "<?php echo $key?>"
                 },
             data: { ms: "manager", action: "find", params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>'} }
         }).done( r => {
@@ -391,9 +391,9 @@
             method: "POST",
             url: "<?php echo $url?>",
             crossDomain: true,
-            beforeSend: function(xhr) {
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                    xhr.setRequestHeader("api-key", "<?php echo $key?>");
+            headers: {
+                    'Content-Type' : 'application/json',
+                    'api-key': "<?php echo $key?>"
                 },
             data: { ms: "manager", action: "transaction", params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>', item: key, type: type}}
         }).done( r => {
@@ -418,9 +418,9 @@
             method: "POST",
             url: "<?php echo $url ?>",
             crossDomain: true,
-            beforeSend: function(xhr) {
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                    xhr.setRequestHeader("api-key", "<?php echo $key?>");
+            headers: {
+                    'Content-Type' : 'application/json',
+                    'api-key': "<?php echo $key?>"
                 },
             data: { ms: "manager", action: "find", params: {msuser_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>' }}
         }).done( r => {
@@ -474,9 +474,9 @@
             method: "POST",
             url: "<?php echo $url?>",
             crossDomain: true,
-            beforeSend: function(xhr) {
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                    xhr.setRequestHeader("api-key", "<?php echo $key?>");
+            headers: {
+                    'Content-Type' : 'application/json',
+                    'api-key': "<?php echo $key?>"
                 },
             data: { ms: "manager", action: "next", params:{user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>'}}
         }).done( r => {
