@@ -129,6 +129,7 @@
         $("#description").removeClass("d-none");
         $("#manager").removeClass("d-none");
         $("#project").removeClass("d-none");
+        console.log(<?php echo $key?>);
         
         updateAmount();
         
