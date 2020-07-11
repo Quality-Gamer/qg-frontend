@@ -99,10 +99,13 @@ class ManagerController extends Controller
         $key = config('microsservices.key');
         $url = config('microsservices.gateway');
 
+        // For a while return is inside the if/else to save time
         if(isset($method) && $method = "POST"){
-            return APIService::postHttpRequest($url,$params,$key);
+            $response = APIService::postHttpRequest($url,$params,$key);
+            return $response["body"]->response;
         } else {
-            return APIService::getHttpRequest($url,$params);
+            $response = APIService::getHttpRequest($url,$params);
+            return $response["body"]->response;
         }
 
     }
