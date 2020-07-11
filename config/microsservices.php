@@ -3,14 +3,10 @@
    
 
 return [
-    'usuario' => [
-        'login' => 'http://localhost:8001/api/login',
-    ],
-    'manager' => [
-        'create' => 'http://localhost:8002/api/create',
-        'find' => 'http://localhost:8002/api/find',
-    ],
-    'gateway' => 'http://localhost:8005/gateway/route',
+    'usuario' => env('MS_MAIN'),
+    'manager' => env('MS_MANAGER'),
+    'gateway' => env('MS_GATEWAY'),
+    'key' => env('MS_KEY'),
 ]
 
   
