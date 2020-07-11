@@ -175,6 +175,7 @@
             $.ajax({
                 method: "POST",
                 url: "<?php echo $url ?>",
+                crossDomain: true,
                 headers: {
                     'Content-Type' : 'application/json',
                     'api-key': "<?php echo $key?>"
@@ -212,6 +213,7 @@
         $.ajax({
             method: "POST",
             url: "<?php echo $url ?>",
+            crossDomain: true,
             headers: {
                     'Content-Type' : 'application/json',
                     'api-key': "<?php echo $key?>"
@@ -387,6 +389,7 @@
         $.ajax({
             method: "POST",
             url: "<?php echo $url?>",
+            crossDomain: true,
             headers: {
                     'Content-Type' : 'application/json',
                     'api-key': "<?php echo $key?>"
@@ -413,6 +416,7 @@
         $.ajax({
             method: "POST",
             url: "<?php echo $url ?>",
+            crossDomain: true,
             headers: {
                     'Content-Type' : 'application/json',
                     'api-key': "<?php echo $key?>"
@@ -468,6 +472,7 @@
         $.ajax({
             method: "POST",
             url: "<?php echo $url?>",
+            crossDomain: true,
             headers: {
                     'Content-Type' : 'application/json',
                     'api-key': "<?php echo $key?>"
