@@ -180,7 +180,7 @@
                     'Content-Type' : 'application/json',
                     'api-key': "<?php echo $key?>"
                 },
-                data: {ms: "manager", action: "store",method:'post'},
+                data: {ms: "manager", action: "store"},
             }).done( r => {
                 var i = r.response[0];
                 appendItem("bk",i.bk);
@@ -219,7 +219,7 @@
                     'Content-Type' : 'application/json',
                     'api-key': "<?php echo $key?>"
                 },
-            data: { ms: "manager", action: "find", method:'POST', params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>'} }
+            data: { ms: "manager", action: "find", params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>'} }
         }).done( r => {
             var res = r.response[0];
             var t = res.team;
@@ -395,7 +395,7 @@
                     'Content-Type' : 'application/json',
                     'api-key': "<?php echo $key?>"
                 },
-            data: { ms: "manager", action: "transaction",method:'post', params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>', item: key, type: type}}
+            data: { ms: "manager", action: "transaction", params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>', item: key, type: type}}
         }).done( r => {
            var res = r.response[0];
            console.log(res);
@@ -422,7 +422,7 @@
                     'Content-Type' : 'application/json',
                     'api-key': "<?php echo $key?>"
                 },
-            data: { ms: "manager", action: "find",method:'post', params: {msuser_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>' }}
+            data: { ms: "manager", action: "find", params: {msuser_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>' }}
         }).done( r => {
             var idm = "#money-project";
             var idc = "#clock-project";
@@ -478,7 +478,7 @@
                     'Content-Type' : 'application/json',
                     'api-key': "<?php echo $key?>"
                 },
-            data: { ms: "manager", action: "next",method:'post', params:{user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>'}}
+            data: { ms: "manager", action: "next", params:{user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>'}}
         }).done( r => {
             var res = r.response[0];
             updateWeekInView(res.week,res.money,res.time);
