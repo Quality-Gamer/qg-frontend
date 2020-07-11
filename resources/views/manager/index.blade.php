@@ -121,6 +121,7 @@
 @section('scripts')
 <script>
     $(document).ready(() => {
+        console.log('<?php echo $key?>');
         $("#btn-close").hide();
         $("#description").hide();
         $("#manager").hide();
