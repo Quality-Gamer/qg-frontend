@@ -182,7 +182,6 @@
                 },
                 data: {ms: "manager", action: "store"},
             }).done( r => {
-                console.log(r)
                 var i = r.response[0];
                 appendItem("bk",i.bk);
                 appendItem("dg",i.dg);
@@ -200,6 +199,7 @@
                 load = 1;
             }).fail( (err) => {
                 console.log(err);
+                console.log(err.headers);
             });
         }
 
