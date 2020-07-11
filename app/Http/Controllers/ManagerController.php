@@ -102,10 +102,10 @@ class ManagerController extends Controller
         // For a while return is inside the if/else to save time
         if(isset($method) && $method = "POST"){
             $response = APIService::postHttpRequest($url,$params,$key);
-            return $response["body"]->response;
+            return APIService::sendJson($response["body"]->response);
         } else {
             $response = APIService::getHttpRequest($url,$params);
-            return $response["body"]->response;
+            return APIService::sendJson($response["body"]->response);
         }
 
     }
