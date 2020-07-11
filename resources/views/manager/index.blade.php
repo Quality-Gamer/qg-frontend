@@ -422,7 +422,6 @@
         }).done( r => {
             var idm = "#money-project";
             var idc = "#clock-project";
-            console.log(r);
             var res = r.response[0];
             var money = res.money;
             var time = res.time;
