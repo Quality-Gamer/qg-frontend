@@ -12,13 +12,13 @@ class APIService extends Model
         return ["status_code" => $response->getStatusCode(),"body" => json_decode($response->getBody())];
     }
 
-    public static function postHttpRequest($url,$params = [],$key = true){
+    public static function postHttpRequest($url,$params = [],$key = null){
         $client = new \GuzzleHttp\Client();
         $response = $client->request('POST', $url, [
             'json' => $params,
             'headers' => [
                 'Content-Type' => 'application/json',
-                'api-key' => $key ? 'KUpATmNSZlVqWG4ycjV1OHgvQT9EKEctS2FQZFNnVms=' : '',
+                'api-key' => $key ? $key : '',
             ]
         ]);
         return ["status_code" => $response->getStatusCode(),"body" => json_decode($response->getBody())];

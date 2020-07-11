@@ -10,6 +10,7 @@ class ManagerController extends Controller
 {
     public function index(Request $request){
         $url = config('microsservices.gateway');
+        $key = config('microsservices.key');
         if($request->session()->has('user')){
             $user = new \App\User;
             $user->id = $request->session()->get('user')['id'];
@@ -32,7 +33,7 @@ class ManagerController extends Controller
                     "cacheable" => 0,
                 );
                 
-                $response = APIService::postHttpRequest($url,$params);
+                $response = APIService::postHttpRequest($url,$params,$key);
                 $body = $response["body"]->response;
                 
                 if($body && $body->status == "OK"){
@@ -72,6 +73,7 @@ class ManagerController extends Controller
             }
             
             $data["url"] = config('microsservices.gateway');
+            $data['key'] = config('microsservices.key');
             Auth::login($user);
             return view("manager.index",$data);
         }

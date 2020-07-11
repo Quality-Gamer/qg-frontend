@@ -12,6 +12,7 @@ class HomeController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
         $url = config('microsservices.gateway');
+        $key = config('microsservices.key');
         $params = array(
             "ms" => "user",
             "action" => "login",
@@ -20,7 +21,7 @@ class HomeController extends Controller
             "cacheable" => 0,
         );
         
-        $response = APIService::postHttpRequest($url,$params);
+        $response = APIService::postHttpRequest($url,$params,$key);
         $body = $response["body"]->response;
         $data = array();
 

@@ -177,7 +177,7 @@
                 url: "<?php echo $url ?>",
                 headers: {
                     'Content-Type' : 'application/json',
-                    'api-key': 'KUpATmNSZlVqWG4ycjV1OHgvQT9EKEctS2FQZFNnVms='
+                    'api-key': "<?php echo $key?>"
                 },
                 data: {ms: "manager", action: "store"},
             }).done( r => {
@@ -214,7 +214,7 @@
             url: "<?php echo $url ?>",
             headers: {
                     'Content-Type' : 'application/json',
-                    'api-key': 'KUpATmNSZlVqWG4ycjV1OHgvQT9EKEctS2FQZFNnVms='
+                    'api-key': "<?php echo $key?>"
                 },
             data: { ms: "manager", action: "find", params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>'} }
         }).done( r => {
@@ -389,7 +389,7 @@
             url: "<?php echo $url?>",
             headers: {
                     'Content-Type' : 'application/json',
-                    'api-key': 'KUpATmNSZlVqWG4ycjV1OHgvQT9EKEctS2FQZFNnVms='
+                    'api-key': "<?php echo $key?>"
                 },
             data: { ms: "manager", action: "transaction", params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>', item: key, type: type}}
         }).done( r => {
@@ -415,7 +415,7 @@
             url: "<?php echo $url ?>",
             headers: {
                     'Content-Type' : 'application/json',
-                    'api-key': 'KUpATmNSZlVqWG4ycjV1OHgvQT9EKEctS2FQZFNnVms='
+                    'api-key': "<?php echo $key?>"
                 },
             data: { ms: "manager", action: "find", params: {msuser_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>' }}
         }).done( r => {
@@ -470,7 +470,7 @@
             url: "<?php echo $url?>",
             headers: {
                     'Content-Type' : 'application/json',
-                    'api-key': 'KUpATmNSZlVqWG4ycjV1OHgvQT9EKEctS2FQZFNnVms='
+                    'api-key': "<?php echo $key?>"
                 },
             data: { ms: "manager", action: "next", params:{user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>'}}
         }).done( r => {
