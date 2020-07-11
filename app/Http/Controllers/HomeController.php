@@ -14,7 +14,7 @@ class HomeController extends Controller
         $url = config('microsservices.gateway');
         $key = config('microsservices.key');
         $params = array(
-            "ms" => "user",
+            "ms" => "main",
             "action" => "login",
             "params" => array("email" => $email, "password" => $password),
             "method" => "POST",
