@@ -121,7 +121,6 @@
 @section('scripts')
 <script>
     $(document).ready(() => {
-        console.log('<?php echo $key?>');
         $("#btn-close").hide();
         $("#description").hide();
         $("#manager").hide();
@@ -183,6 +182,7 @@
                 },
                 data: {ms: "manager", action: "store"},
             }).done( r => {
+                console.log(r)
                 var i = r.response[0];
                 appendItem("bk",i.bk);
                 appendItem("dg",i.dg);
