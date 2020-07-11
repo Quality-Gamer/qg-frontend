@@ -92,4 +92,19 @@ class ManagerController extends Controller
 
         return redirect("/");
     }
+
+    public function makeHTTPRequest(Request $request){
+        $method = $request->input('method');
+        $params = $request->input('params');
+        $key = config('microsservices.key');
+        $url = config('microsservices.gateway');
+
+        if(isset($method) && $method = "POST"){
+            return APIService::postHttpRequest($url,$params,$key);
+        } else {
+            return APIService::getHttpRequest($url,$params);
+        }
+
+    }
+
 }

@@ -173,14 +173,13 @@
         if(!load){
             
             $.ajax({
-                method: "POST",
-                url: "<?php echo $url ?>",
+                method: "GET",
+                url: "/api/http/request",
                 crossDomain: true,
                 headers: {
                     'Content-Type' : 'application/json',
-                    'api-key': "<?php echo $key?>"
                 },
-                data: {ms: "manager", action: "store"},
+                data: { method: "POST", params : { ms: "manager", action: "store"}},
             }).done( r => {
                 var i = r.response[0];
                 appendItem("bk",i.bk);
@@ -212,14 +211,13 @@
 
     const changeToProject = () => {
         $.ajax({
-            method: "POST",
-            url: "<?php echo $url ?>",
+            method: "GET",
+            url: "/api/http/request",
             crossDomain: true,
             headers: {
                     'Content-Type' : 'application/json',
-                    'api-key': "<?php echo $key?>"
                 },
-            data: { ms: "manager", action: "find", params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>'} }
+            data: { method: "POST", params : { ms: "manager", action: "find", params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>'} } }
         }).done( r => {
             var res = r.response[0];
             var t = res.team;
@@ -388,14 +386,13 @@
 
     const buyItem = (key,price,type) => {
         $.ajax({
-            method: "POST",
-            url: "<?php echo $url?>",
+            method: "GET",
+            url: "/api/http/request",
             crossDomain: true,
             headers: {
                     'Content-Type' : 'application/json',
-                    'api-key': "<?php echo $key?>"
                 },
-            data: { ms: "manager", action: "transaction", params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>', item: key, type: type}}
+            data: { method: "POST", params : { ms: "manager", action: "transaction", params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>', item: key, type: type}}}
         }).done( r => {
            var res = r.response[0];
            console.log(res);
@@ -415,14 +412,13 @@
 
     const updateAmount = () => {
         $.ajax({
-            method: "POST",
-            url: "<?php echo $url ?>",
+            method: "GET",
+            url: "/api/http/request",
             crossDomain: true,
             headers: {
                     'Content-Type' : 'application/json',
-                    'api-key': "<?php echo $key?>"
                 },
-            data: { ms: "manager", action: "find", params: {msuser_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>' }}
+            data: { method: "POST", params : { ms: "manager", action: "find", params: {msuser_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>' }}}
         }).done( r => {
             var idm = "#money-project";
             var idc = "#clock-project";
@@ -471,14 +467,13 @@
         }
 
         $.ajax({
-            method: "POST",
-            url: "<?php echo $url?>",
+            method: "GET",
+            url: "/api/http/request",
             crossDomain: true,
             headers: {
                     'Content-Type' : 'application/json',
-                    'api-key': "<?php echo $key?>"
                 },
-            data: { ms: "manager", action: "next", params:{user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>'}}
+            data: { method: "POST", params : { ms: "manager", action: "next", params:{user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>'}}}
         }).done( r => {
             var res = r.response[0];
             updateWeekInView(res.week,res.money,res.time);

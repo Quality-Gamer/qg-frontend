@@ -17,4 +17,4 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
-// Route::post('/update/week', ['middleware' => 'cors', 'uses' => 'ManagerController@updateWeek']);
+Route::get('/http/request', ['middleware' => 'cors', 'uses' => 'ManagerController@makeHTTPRequest']);
