@@ -418,12 +418,11 @@
             headers: {
                     'Content-Type' : 'application/json',
                 },
-            data: { method: "POST", params : { ms: "manager", action: "find", params: {msuser_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>' }}}
+            data: { method: "POST", params : { ms: "manager", action: "find", params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>' }}}
         }).done( r => {
             var idm = "#money-project";
             var idc = "#clock-project";
-            console.log(r);
-            // var res = r.response[0];
+            var res = r.response[0];
             var money = res.money;
             var time = res.time;
             var html_money = "<div class=\"clear-amount\">"+money+"</div>";
