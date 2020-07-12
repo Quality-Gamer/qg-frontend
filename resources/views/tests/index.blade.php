@@ -18,7 +18,7 @@
                 <img class='badge-size' src='../assets/img/badges/go.png'/>
             </div>
         </div>
-        <div style='position:absolute;bottom:0;right:0' align="right">
+        <div style='position:absolute;bottom:0;right:0;margin-right:15px;' align="right">
             <button onclick='LoadTests()' class="btn btn-success btn-icon btn-round">
                 <i class="now-ui-icons ui-1_simple-add"></i>
             </button>
