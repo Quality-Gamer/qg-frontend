@@ -32,7 +32,7 @@
                     @if ($allow)
                         @foreach ($allow as $a)
                             <div class="row">
-                                <div class="col-3"><img src='../assets/img/badges{{$a->badge}}'></div>
+                                <div class="col-3"><img class="badge-size" src='../assets/img/badges{{$a->badge}}'></div>
                                 <div class="col-4">{{$a->title}}</div>
                                 <div class="col-3"><img class="badge-size" src='../assets/img/icons/coin_green.png'> {{$a->test_value}}</div>
                                 <div class="col-2"><button class="btn btn-success">Fazer</button></div>
@@ -44,7 +44,7 @@
                     @if ($deny)
                         @foreach ($deny as $d)
                             <div class="row">
-                                <div class="col-3"><img src='../assets/img/badges{{$d->badge}}'></div>
+                                <div class="col-3"><img class="badge-size" src='../assets/img/badges{{$d->badge}}'></div>
                                 <div class="col-4">{{$d->title}}</div>
                                 <div class="col-3"><img class="badge-size" src='../assets/img/icons/coin_green.png'> {{$d->test_value}}</div>
                                 <div class="col-2"><div class="badge badge-danger">Feito X</div></div>
