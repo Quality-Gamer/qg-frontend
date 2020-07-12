@@ -61,6 +61,7 @@
 <script>
     $(document).ready(() => {
         $("#btn-close").hide();
+        $("#tests-div").removeClass("d-none");
         $("#tests-div").hide();
     });
 
