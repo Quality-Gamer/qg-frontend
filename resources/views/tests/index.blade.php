@@ -76,3 +76,4 @@
         $("#tests-div").hide();
     };
 </script>
+@endsection
