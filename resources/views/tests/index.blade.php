@@ -35,7 +35,7 @@
                                 <div class="col-2"><img class="test-icon" src='../assets/img/badges{{$a->badge}}'></div>
                                 <div class="col-3">{{$a->title}}</div>
                                 <div class="col-2"><img class="test-icon" src='../assets/img/icons/coin_green.png'> {{$a->test_value}}</div>
-                                <div class="col-2"><button style="cursor:pointer" class="badge badge-success">Fazer</button></div>
+                                <div class="col-2"><button onclick = 'joinTest("<?php echo $a->id?>")' style="cursor:pointer" class="badge badge-success">Fazer</button></div>
                             </div>
                         @endforeach
                     @endif
@@ -76,5 +76,19 @@
         $("#btn-close").hide();
         $("#tests-div").hide();
     };
+
+    const joinTest = (test_id) => {
+        $.ajax({
+            method: "GET",
+            url: "/api/http/request",
+            crossDomain: true,
+            headers: {
+                    'Content-Type' : 'application/json',
+                },
+            data: { method: "GET", params : { ms: "test", action: "create", params: {user_id: <?php echo Auth::user()->id ?>, test_id:test_id} } }
+        }).done( r => { 
+            console.log(r);
+        });
+    }
 </script>
 @endsection
