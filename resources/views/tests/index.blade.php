@@ -9,14 +9,19 @@
     <div class="jumbotron p-4 card-default col-lg-12 col-md-12 col-sm-12 bg-lg-green">
         <div align="center" class="row">
             <div class="col-2">
-                <img src='../assets/img/badges/php.png'/>
+                <img style='width:30px;' src='../assets/img/badges/php.png'/>
             </div>
             <div class="col-2">
-                <img src='../assets/img/badges/python.png'/>
+                <img style='width:30px;' src='../assets/img/badges/python.png'/>
             </div>
             <div class="col-2">
-                <img src='../assets/img/badges/go.png'/>
+                <img style='width:30px;' src='../assets/img/badges/go.png'/>
             </div>
+        </div>
+        <div style='position:absolute;bottom:0;' align="right">
+            <button class="btn btn-success btn-icon btn-round">
+                <i class="now-ui-icons ui-1_simple-add"></i>
+            </button>
         </div>
     </div>
 </div>
