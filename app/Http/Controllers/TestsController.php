@@ -23,7 +23,7 @@ class TestsController extends Controller
                 "ms" => "tests",
                 "action" => "tests",
                 "params" => array(
-                    "user_id" => $user->id,
+                    "user_id" => (string)$user->id,
                 ),
                 "method" => "GET",
                 "cacheable" => 0,
