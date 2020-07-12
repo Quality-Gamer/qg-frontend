@@ -31,7 +31,7 @@
                 <div>
                     @if ($allow)
                         @foreach ($allow as $a)
-                            <div class="row">
+                            <div align="center" class="row">
                                 <div class="col-2"><img class="test-icon" src='../assets/img/badges{{$a->badge}}'></div>
                                 <div class="col-3">{{$a->title}}</div>
                                 <div class="col-2"><img class="test-icon" src='../assets/img/icons/coin_green.png'> {{$a->test_value}}</div>
@@ -43,10 +43,10 @@
                 <div>
                     @if ($deny)
                         @foreach ($deny as $d)
-                            <div class="row">
-                                <div class="col-3"><img class="test-icon" src='../assets/img/badges{{$d->badge}}'></div>
-                                <div class="col-4">{{$d->title}}</div>
-                                <div class="col-3"><img class="test-icon" src='../assets/img/icons/coin_green.png'> {{$d->test_value}}</div>
+                            <div align="center" class="row">
+                                <div class="col-2"><img class="test-icon" src='../assets/img/badges{{$d->badge}}'></div>
+                                <div class="col-3">{{$d->title}}</div>
+                                <div class="col-2"><img class="test-icon" src='../assets/img/icons/coin_green.png'> {{$d->test_value}}</div>
                                 <div class="col-2"><div class="badge badge-danger">Feito X</div></div>
                             </div>
                         @endforeach
@@ -85,7 +85,7 @@
             headers: {
                     'Content-Type' : 'application/json',
                 },
-            data: { method: "GET", params : { ms: "test", action: "create", params: {user_id: <?php echo Auth::user()->id ?>, test_id:test_id} } }
+            data: { method: "GET", params : { ms: "tests", action: "create", params: {user_id: <?php echo Auth::user()->id ?>, test_id:test_id} } }
         }).done( r => { 
             console.log(r);
         });
