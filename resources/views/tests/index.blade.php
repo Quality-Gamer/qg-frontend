@@ -32,9 +32,9 @@
                     @if ($allow)
                         @foreach ($allow as $a)
                             <div class="row">
-                                <div class="col-3"><img class="test-icon" src='../assets/img/badges{{$a->badge}}'></div>
-                                <div class="col-4">{{$a->title}}</div>
-                                <div class="col-3"><img class="test-icon" src='../assets/img/icons/coin_green.png'> {{$a->test_value}}</div>
+                                <div class="col-2"><img class="test-icon" src='../assets/img/badges{{$a->badge}}'></div>
+                                <div class="col-3">{{$a->title}}</div>
+                                <div class="col-2"><img class="test-icon" src='../assets/img/icons/coin_green.png'> {{$a->test_value}}</div>
                                 <div class="col-2"><button class="btn btn-success">Fazer</button></div>
                             </div>
                         @endforeach
