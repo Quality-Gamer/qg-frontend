@@ -9,7 +9,11 @@ use Illuminate\Support\Facades\Auth;
 class TestsController extends Controller
 {
     public function index(Request $request){
-        $data = [];
+        $user = new \App\User;
+        $user->id = $request->session()->get('user')['id'];
+        $user->name = $request->session()->get('user')['name'];
+        $user->email = $request->session()->get('user')['email'];
+        $data = array();
         return view("tests.index",$data);
     }
 
