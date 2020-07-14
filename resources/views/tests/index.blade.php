@@ -149,8 +149,8 @@
                     $(".test-content").remove();
                     $("#btn-give-up").hide();
                     $("#test-title").append(html);
+                    return;
                 });
-                return;
             }
             var plusOne = r.order + 1;
             var html = "<div align='center' class='test-content'>"+
