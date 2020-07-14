@@ -28,7 +28,7 @@
     </div>
     <div class="d-none" id="tests-div">
             <div align="center"><h2 class="title-card">Descrição</h2></div>
-                <div>
+                <div align="center">
                     @if ($allow)
                         @foreach ($allow as $a)
                             <div align="center" class="row my-1">
@@ -40,7 +40,7 @@
                         @endforeach
                     @endif
                 </div>
-                <div>
+                <div align="center">
                     @if ($deny)
                         @foreach ($deny as $d)
                             <div align="center" class="row my-1">
