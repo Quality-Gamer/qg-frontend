@@ -53,7 +53,7 @@
                     @endif
                 </div>
     </div>
-    <div id="id-start">
+    <div class="d-none" id="id-start">
         <div class="test-title"></div>
     </div>
     </div>
@@ -66,6 +66,8 @@
         $("#btn-close").hide();
         $("#tests-div").removeClass("d-none");
         $("#tests-div").hide();
+        $("#id-start").removeClass("d-none");
+        $("#id-start").hide();
         matchId = '';
     });
 
@@ -97,9 +99,10 @@
             "<p>Você terá 45 segundos para responder cada questão</p><br/>"+
             "<button class='btn btn-success'>Começar</button>"+
             "</div>";
-
             $(".test-content").remove();
             $("#test-title").append(html);
+            $("#id-start").show();
+
             matchId = r.match_id;
         });
     }
