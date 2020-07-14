@@ -19,7 +19,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
   <meta charset="utf-8" />
-  <!-- CSRF Token --> 
+  <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/icons/favicon.png">
@@ -32,10 +32,12 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <!-- CSS Files -->
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../assets/css/countdown.css" rel="stylesheet" />
+
   <link href="../assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/css/style.css" rel="stylesheet" />
- 
+
    <!--   Core JS Files   -->
    <script src="../assets/js/core/jquery.min.js" type="text/javascript"></script>
   <script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
@@ -116,7 +118,7 @@
                                 <input type="submit" class="form-control bold" value="Sair">
                             </div>
                         </form>
-                                        
+
                         </ul>
                     </div>
                     </div>

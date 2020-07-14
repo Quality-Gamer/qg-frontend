@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\APIService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ManagerController extends Controller
 {
@@ -32,10 +33,10 @@ class ManagerController extends Controller
                     "method" => "GET",
                     "cacheable" => 0,
                 );
-                
+
                 $response = APIService::postHttpRequest($url,$params,$key);
                 $body = $response["body"]->response;
-                
+
                 if($body && $body->status == "OK"){
                     $r = $body->response[0];
                     $managerId = $r->id;
@@ -49,7 +50,7 @@ class ManagerController extends Controller
 
             if($request->session()->get('manager_id')){
                 $data["manager_id"] = $request->session()->get('manager_id');
-                
+
                 $p = array(
                     "ms" => "manager",
                     "action" => "find",
@@ -58,7 +59,7 @@ class ManagerController extends Controller
                     "manager_id" => (string)$data["manager_id"]
                     ),
                 );
-                    
+
                 $resp = APIService::postHttpRequest($url,$p,$key);
                 $body = $resp["body"]->response;
                 if($body && $body->status == "OK"){
@@ -71,7 +72,7 @@ class ManagerController extends Controller
             } else {
                 $data["message"] = "Erro ao conectar com o servidor.";
             }
-            
+
             $data["url"] = config('microsservices.gateway');
             $data['key'] = config('microsservices.key');
             Auth::login($user);
