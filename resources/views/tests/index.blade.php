@@ -35,7 +35,7 @@
                                 <div class="col-2"><img class="test-icon" src='../assets/img/badges{{$a->badge}}'></div>
                                 <div class="col-3">{{$a->title}}</div>
                                 <div class="col-2"><img class="test-icon" src='../assets/img/icons/coin_green.png'> {{$a->test_value}}</div>
-                                <div class="col-2"><button onclick = 'joinTest("<?php echo $a->id?>")' style="cursor:pointer" class="badge badge-success">Fazer</button></div>
+                                <div class="col-2"><button onclick = 'joinTest("<?php echo $a->id?>","<?php echo $a->title?>")' style="cursor:pointer" class="badge badge-success">Fazer</button></div>
                             </div>
                         @endforeach
                     @endif
@@ -53,6 +53,9 @@
                     @endif
                 </div>
     </div>
+    <div id="id-start">
+        <div class="test-title"></div>
+    </div>
     </div>
 </div>
 @endsection
@@ -63,6 +66,7 @@
         $("#btn-close").hide();
         $("#tests-div").removeClass("d-none");
         $("#tests-div").hide();
+        matchId = '';
     });
 
     const LoadTests = () => {
@@ -77,7 +81,7 @@
         $("#tests-div").hide();
     };
 
-    const joinTest = (test_id) => {
+    const joinTest = (test_id,title) => {
         $.ajax({
             method: "GET",
             url: "/api/http/request",
@@ -87,7 +91,16 @@
                 },
             data: { method: "GET", params : { ms: "tests", action: "create", params: {user_id: <?php echo Auth::user()->id ?>, test_id:test_id} } }
         }).done( r => { 
-            console.log(r);
+            var html = "<div class='test-content' align='center'"+
+            "<h3>Pronto para começar o teste?</h3><br/>"+
+            "<strong><h4>"+title+"</h4></strong><br/>"+
+            "<p>Você terá 45 segundos para responder cada questão</p><br/>"+
+            "<button class='btn btn-success'>Começar</button>"+
+            "</div>";
+
+            $(".test-content").remove();
+            $("#test-title").append(html);
+            matchId = r.match_id;
         });
     }
 </script>
