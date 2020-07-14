@@ -115,6 +115,7 @@
     }
 
     const getQuestion = order => {
+        var ret = false;
         $.ajax({
             method: "GET",
             url: "/api/http/request",
@@ -134,7 +135,6 @@
                     },
                 data: { method: "POST", params : { ms: "tests", action: "end", params: {user_id: "<?php echo Auth::user()->id ?>", match_id:matchId, win:"1"} } }
                 }).done( r => {
-                    console.log(r)
                     var sc = r.response.score * 100;
                     var res = "<div align='center'><h4 style='color:#246598'>Que pena você não foi aprovado!<br/>Acerto:" + sc + "%</h4></div>";
                     if(r.response.win == 1){
@@ -149,9 +149,14 @@
                     $(".test-content").remove();
                     $("#btn-give-up").hide();
                     $("#test-title").append(html);
-                    return;
+                    ret = true;
                 });
             }
+
+            if(ret){
+                return;
+            }
+
             var plusOne = r.order + 1;
             var html = "<div align='center' class='test-content'>"+
                         "<div style='color:#246598'><h3>Pergunta "+plusOne+":</h3></div>"+
