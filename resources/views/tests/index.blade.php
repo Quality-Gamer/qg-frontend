@@ -102,6 +102,8 @@
             $(".test-content").remove();
             $("#test-title").append(html);
             $("#id-start").show();
+            $("#id-start").hide();
+            $("#badges-div").hide();
 
             matchId = r.match_id;
         });
