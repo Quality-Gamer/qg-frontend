@@ -134,11 +134,23 @@
                     },
                 data: { method: "POST", params : { ms: "tests", action: "end", params: {user_id: "<?php echo Auth::user()->id ?>", match_id:matchId, win:"1"} } }
                 }).done( r => {
-                    var html = "<div>Parabéns o teste foi finalizado com sucesso!<div>"; //temporário
+                    console.log(r)
+                    var sc = r.response.score * 100;
+                    var res = "<div align='center'><h4 style='color:#246598'>Que pena você não foi aprovado!<br/>Acerto:" + sc + "%</h4></div>";
+                    if(r.response.win == 1){
+                        res = "<div align='center'><h4 style='color:#246598'>Parabéns você foi aprovado!<br/>Acerto:" + sc + "%</h4></div>";
+                    }
+                    var html = "<div align='center' class='test-content'>"+
+                    "<div style='color:#246598'>"+
+                    res+
+                    "</div>"+
+                    "<button onclick='document.location.reload(true);' class='btn btn-success'>Voltar</button>"
+                    "</div>";
                     $(".test-content").remove();
                     $("#btn-give-up").hide();
                     $("#test-title").append(html);
                 });
+                return;
             }
             var plusOne = r.order + 1;
             var html = "<div align='center' class='test-content'>"+
