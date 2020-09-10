@@ -37,6 +37,7 @@
   <link href="../assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/css/style.css" rel="stylesheet" />
+  <link href="../assets/css/chat.css" rel="stylesheet" />
 
    <!--   Core JS Files   -->
    <script src="../assets/js/core/jquery.min.js" type="text/javascript"></script>
@@ -52,6 +53,7 @@
   <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVKjHMzN-gncXoFcOhL45VxYq7-XG1HsA"></script> -->
   <!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/now-ui-kit.js?v=1.3.0" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
   <!-- SendBird Chat -->
   <!-- <script src="../assets/sendbird/SendBird.min.js"></script> -->
  <!-- Scripts -->
@@ -171,9 +173,164 @@
             </div>
             </div>
         </div>
+        @guest
+        <div id="chat-min-div" class="col-lg-3 col-md-3 col-sm-6 col-6 chat">
+            <div class="card card-min"">
+            <div style="display:flex; justify-content:space-between">
+                <h4 class="card-min-title">
+                Chat
+                </h4>
+                <div style="margin-top:4px; margin-right:4px" onclick="showChat()" id="div-open">
+                    <i class="now-ui-icons arrows-1_minimal-up"></i>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div id="chat-div" class="col-lg-3 col-md-3 col-sm-6 col-6 chat">
+                    <div class="card">
+                        <div class="card-body container">
+                            <div style="display:flex; justify-content:space-between">
+                                <h4 class="card-title box-title">
+                                Chat
+                                </h4>
+                                <div onclick="hideChat()" id="div-close">
+                                    <i class="now-ui-icons arrows-1_minimal-down"></i>
+                                </div>
+                            </div>
+                            <div class="card-content row">
+                                <div class="col-lg-2 col-md-2 col-sm-4 col-4 card-overflow-y">
+                                    <ul class="list-group" style="list-style-type:none;">
+                                        <li class="chat-avatar"><img src="https://media-exp1.licdn.com/dms/image/C4E03AQF6_Y5xP6pd7w/profile-displayphoto-shrink_200_200/0?e=1605139200&v=beta&t=EAc_MK9AF9YiWgQNrXBZD5YTFcu3jVZ2-isWfA4k7hI" class="figure-img img-fluid rounded" style></li>
+                                        <li class="chat-avatar"><img src="https://media-exp1.licdn.com/dms/image/C4E03AQF6_Y5xP6pd7w/profile-displayphoto-shrink_200_200/0?e=1605139200&v=beta&t=EAc_MK9AF9YiWgQNrXBZD5YTFcu3jVZ2-isWfA4k7hI" class="figure-img img-fluid rounded" style></li>
+                                        <div align="center"><li class="chat-avatar"><div align="center" class="bg-blue py-1 badge"><strong><span style="font-size:18px;">+</span></strong></li></div>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-8 col-8">
+                                    <div id="messenger-box" class="messenger-box card-overflow-y">
+                                    <h6 id="empty-chat" class="card-subtitle mb-2 text-muted">Ops! Vocês ainda não mandaram nenhuma mensagem =(</h6>
+                                    </div><!-- /.messenger-box -->
+                                    <div class="send-mgs">
+                                            <div class="yourmsg">
+                                                <input id="input-msg" class="form-control" type="text">
+                                            </div>
+
+                                            <button type="button" id="btn-msg" class="msg-send-btn">
+                                                <div>
+                                                    <i class="now-ui-icons ui-1_send"></i>
+                                                </div>
+                                            </button>
+                                        </div>
+                                </div>
+                            </div>
+                        </div> <!-- /.card-body -->
+                        <div class="footer-inner bg-white">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                Copyright &copy; 2018 Ela Admin
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                Designed by <a target="_blank" href="https://colorlib.com">Colorlib</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div><!-- /.card -->
+                </div>
+        @endguest
     </main>
 
     @yield('scripts')
+
+    <script>
+        $(document).ready(function(){
+            socket = io.connect("https://qg-chat.herokuapp.com/");
+            openChat();
+            socket.on('message', (data) => {
+                console.log(data);
+                json = JSON.parse(data);
+                addMessage(json);
+            });
+
+        });
+
+        openChat = () => {
+             var messageObject = {
+                author : 'Iago',
+                message : 'Oi tudo bem?',
+                user_id_1 : 2,
+                user_id_2 : 7
+            }
+            socket.emit('openChatRoom', messageObject);
+        }
+
+        sendMessage = () => {
+             var messageObject = {
+                author : 'Iago',
+                message : 'Oi tudo bem?',
+                user_id_1 : 2,
+                user_id_2 : 7
+            }
+            socket.emit('sendMessage', messageObject);
+        }
+
+        hideChat = () => {
+            $("#chat-div").hide();
+            $("#chat-min-div").show();
+        }
+
+        showChat = () => {
+            $("#chat-min-div").hide();
+            $("#chat-div").show();
+        }
+
+        addMessage = (message) => {
+            $("#empty-chat").hide();
+            var image = "https://media-exp1.licdn.com/dms/image/C4E03AQF6_Y5xP6pd7w/profile-displayphoto-shrink_200_200/0?e=1605139200&v=beta&t=EAc_MK9AF9YiWgQNrXBZD5YTFcu3jVZ2-isWfA4k7hI";
+            var html = getReceivedHTMLMessages(message.user_id,message.message,image,message.datetime);
+            getUser(message.user_id);
+            $("#messenger-box").append(html);
+        }
+
+        getReceivedHTMLMessages = (username,msg,profile_url,date) => {
+            var received_msg_html = '<ul><li><div class="msg-received msg-received-call msg-container"><div class="avatar">'+
+            '<img src="'+profile_url+'" alt="">'+
+            '<div class="send-time">'+getDateTime(date)+'</div></div><div class="msg-box"><div class="inner-box"> <div class="name">'+
+            '<span class="user-name"></span>' + '</div><div class="meg">'+msg+'</div></div></div></div></li></ul>';
+            return received_msg_html;
+        }
+        getSendHTMLMessages = (username,msg,profile_url,date) => {
+            var send_msg_html = '<ul><li><div class="msg-sent msg-sent-call msg-container"><div class="avatar">'+
+            '<img src="'+profile_url+'" alt="">'+
+            '<div class="send-time">'+getDateTime(date)+'</div></div><div class="msg-box"><div class="inner-box"> <div class="name">'+
+            '<span class="user-name"></span>' + '</div><div class="meg">'+msg+'</div></div></div></div></li></ul>';
+            return send_msg_html;
+        }
+
+        getDateTime = (timestamp) => {
+            var ts = Math.trunc(timestamp/1000);
+            dateObj = new Date(ts * 1000);
+            utcString = dateObj.toUTCString();
+            time = utcString.slice(-11, -4);
+            date = utcString.slice(4, 16);
+
+            var formattedTime = date + "\n" +  time;
+            return formattedTime;
+        }
+
+        getUser = (uid) => {
+            user_name = null;
+            $.ajax({
+            method: "POST",
+            url: "https://qg-usuario.herokuapp.com/api/user?user_id=1",
+            crossDomain: true,
+            // headers: {
+            //         'Content-Type' : 'application/json',
+            //     },
+            data: { user_id: 1}
+            }).done( (r) => {
+                document.getElementsByClassName("user-name").innerText = r.name;
+            });
+        }
+    </script>
 
 </body>
 </html>
