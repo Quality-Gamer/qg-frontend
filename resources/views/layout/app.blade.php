@@ -178,7 +178,7 @@
             <div class="card card-min"">
             <div style="display:flex; justify-content:space-between">
                 <h4 class="card-min-title">
-                Chat
+                Chat <i class="now-ui-icons ui-2_chat-round" style="position:relative;top:3px"></i>
                 </h4>
                 <div style="margin-top:4px; margin-right:4px" onclick="showChat()" id="div-open">
                     <i class="now-ui-icons arrows-1_minimal-up"></i>
@@ -200,21 +200,24 @@
                             <div class="card-content row">
                                 <div class="col-lg-2 col-md-2 col-sm-4 col-4 card-overflow-y">
                                     <ul class="list-group" style="list-style-type:none;">
-                                        <li class="chat-avatar"><img src="https://media-exp1.licdn.com/dms/image/C4E03AQF6_Y5xP6pd7w/profile-displayphoto-shrink_200_200/0?e=1605139200&v=beta&t=EAc_MK9AF9YiWgQNrXBZD5YTFcu3jVZ2-isWfA4k7hI" class="figure-img img-fluid rounded" style></li>
-                                        <li class="chat-avatar"><img src="https://media-exp1.licdn.com/dms/image/C4E03AQF6_Y5xP6pd7w/profile-displayphoto-shrink_200_200/0?e=1605139200&v=beta&t=EAc_MK9AF9YiWgQNrXBZD5YTFcu3jVZ2-isWfA4k7hI" class="figure-img img-fluid rounded" style></li>
-                                        <div align="center"><li class="chat-avatar"><div align="center" class="bg-blue py-1 badge"><strong><span style="font-size:18px;">+</span></strong></li></div>
+                                        <li class="chat-avatar" id="user-7"><span class="badge badge-danger" id="clear-count-7" style="background-color:transparent;border-color:transparent;color:transparent;z-index:1000;position:relative;top:17px;left:8px">0</span><img src="https://media-exp1.licdn.com/dms/image/C4E03AQF6_Y5xP6pd7w/profile-displayphoto-shrink_200_200/0?e=1605139200&v=beta&t=EAc_MK9AF9YiWgQNrXBZD5YTFcu3jVZ2-isWfA4k7hI" class="figure-img img-fluid rounded" style></li>
+                                        <li class="chat-avatar"><span class="badge badge-danger" id="clear-count-4" style="background-color:transparent;border-color:transparent;color:transparent;z-index:1000;position:relative;top:17px;left:8px">0</span><img src="https://media-exp1.licdn.com/dms/image/C4E03AQF6_Y5xP6pd7w/profile-displayphoto-shrink_200_200/0?e=1605139200&v=beta&t=EAc_MK9AF9YiWgQNrXBZD5YTFcu3jVZ2-isWfA4k7hI" class="figure-img img-fluid rounded" style></li>
+                                        <!-- <div align="center"><li class="chat-avatar"><div align="center" class="bg-blue py-1 badge"><strong><span style="font-size:18px;">+</span></strong></li></div> -->
                                     </ul>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-sm-8 col-8">
-                                    <div id="messenger-box" class="messenger-box card-overflow-y">
-                                    <h6 id="empty-chat" class="card-subtitle mb-2 text-muted">Ops! Vocês ainda não mandaram nenhuma mensagem =(</h6>
+                                    <div id="messenger-box" class="messenger-box card-overflow-y" style="overflow-x:none;">
+                                    <div id="empty-chat" class="card-subtitle mb-2 text-muted">
+                                    <div><h6>Ops! Vocês ainda não mandaram nenhuma mensagem =(</h6></div>
+                                    <!-- <div style="" class="lds-hourglass"></div> loading -->
+                                    </div>
                                     </div><!-- /.messenger-box -->
                                     <div class="send-mgs">
                                             <div class="yourmsg">
                                                 <input id="input-msg" class="form-control" type="text">
                                             </div>
 
-                                            <button type="button" id="btn-msg" class="msg-send-btn">
+                                            <button onclick="sendMessage()" type="button" id="btn-msg" class="msg-send-btn">
                                                 <div>
                                                     <i class="now-ui-icons ui-1_send"></i>
                                                 </div>
@@ -242,30 +245,46 @@
 
     <script>
         $(document).ready(function(){
+            hideChat();
+            my_name = null;
+            your_name = null;
+            my_id = 2;
+            your_id = null;
+
+
             socket = io.connect("https://qg-chat.herokuapp.com/");
+            socket.emit('news', {user_id_1: 1});
             openChat();
             socket.on('message', (data) => {
                 console.log(data);
                 json = JSON.parse(data);
-                addMessage(json);
+                if(json.count) {
+                    addCountNew(json);
+                } else {
+                    addMessage(json);
+                }
+                scrollTopAnimated();
             });
-
         });
 
         openChat = () => {
              var messageObject = {
                 author : 'Iago',
                 message : 'Oi tudo bem?',
-                user_id_1 : 2,
-                user_id_2 : 7
+                user_id_1 : 7,
+                user_id_2 : 2
             }
+            getUser(messageObject.user_id_2);
             socket.emit('openChatRoom', messageObject);
         }
 
         sendMessage = () => {
-             var messageObject = {
-                author : 'Iago',
-                message : 'Oi tudo bem?',
+            var msg = $("#input-msg").val();
+            $("#input-msg").val('');
+
+            var messageObject = {
+                author : 'QualityGamer',
+                message : msg,
                 user_id_1 : 2,
                 user_id_2 : 7
             }
@@ -280,14 +299,21 @@
         showChat = () => {
             $("#chat-min-div").hide();
             $("#chat-div").show();
+            scrollTopAnimated();
         }
 
         addMessage = (message) => {
             $("#empty-chat").hide();
             var image = "https://media-exp1.licdn.com/dms/image/C4E03AQF6_Y5xP6pd7w/profile-displayphoto-shrink_200_200/0?e=1605139200&v=beta&t=EAc_MK9AF9YiWgQNrXBZD5YTFcu3jVZ2-isWfA4k7hI";
-            var html = getReceivedHTMLMessages(message.user_id,message.message,image,message.datetime);
-            getUser(message.user_id);
+
+            if(my_id == message.user_id) {
+                var html = getSendHTMLMessages(message.user_id,message.message,image,message.datetime);
+            } else {
+                var html = getReceivedHTMLMessages(message.user_id,message.message,image,message.datetime);
+            }
+
             $("#messenger-box").append(html);
+            fillUser(your_name);
         }
 
         getReceivedHTMLMessages = (username,msg,profile_url,date) => {
@@ -308,28 +334,51 @@
         getDateTime = (timestamp) => {
             var ts = Math.trunc(timestamp/1000);
             dateObj = new Date(ts * 1000);
-            utcString = dateObj.toUTCString();
-            time = utcString.slice(-11, -4);
-            date = utcString.slice(4, 16);
-
-            var formattedTime = date + "\n" +  time;
-            return formattedTime;
+            brString = dateObj.toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
+            return brString;
         }
 
         getUser = (uid) => {
-            user_name = null;
             $.ajax({
             method: "POST",
             url: "https://qg-usuario.herokuapp.com/api/user?user_id=1",
             crossDomain: true,
-            // headers: {
-            //         'Content-Type' : 'application/json',
-            //     },
             data: { user_id: 1}
             }).done( (r) => {
-                document.getElementsByClassName("user-name").innerText = r.name;
+                your_name = r.name;
+                your_id = r.id;
             });
         }
+
+        fillUser = (name) => {
+            $(".user-name").text(name);
+        }
+
+        scrollTopAnimated = () => {
+
+            var scroll = $("#messenger-box");
+            var totalOverflow = scroll.css('height');
+            var toverflow = totalOverflow.split('px');
+            var velocity = 5; //to force fast and whole animated
+            $("#messenger-box").animate(
+                { scrollTop: toverflow[0] * velocity}, 100);
+        }
+
+        addCountNew = (data) => {
+            var id = "#user-"+data.user_id;
+            var cc = "clear-count-"+data.user_id;
+            $("#"+cc).remove();
+            var html = '<span class="badge badge-danger" id="'+cc+'" style="z-index:1000;position:relative;top:17px;left:8px">'+data.count+'</span>';
+            $(id).prepend(html);
+        }
+
+        $(document).on('keypress',function(e) {
+            if(e.which == 13) {
+                if($("#input-msg").is(":focus") && $("#input-msg").val().length > 0) {
+                    sendMessage();
+                }
+            }
+        });
     </script>
 
 </body>
