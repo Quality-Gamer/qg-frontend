@@ -170,6 +170,11 @@
     -webkit-border-radius: 500px;
 }
 
+.writing-text {
+    color:#818c95;
+    font-size:11px;
+}
+
 .lds-hourglass {
   display: inline-block;
   position: relative;

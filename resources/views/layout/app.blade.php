@@ -248,18 +248,21 @@
             hideChat();
             my_name = null;
             your_name = null;
-            my_id = 2;
-            your_id = null;
+            my_id = 7;
+            your_id = 2;
 
 
             socket = io.connect("https://qg-chat.herokuapp.com/");
-            socket.emit('news', {user_id_1: 1});
+            socket.emit('news', {user_id_1: 7});
+            socket.emit('write', {user_id_1: 7, user_id_2: 2});
             openChat();
             socket.on('message', (data) => {
-                console.log(data);
                 json = JSON.parse(data);
+                console.log(json)
                 if(json.count) {
                     addCountNew(json);
+                } else if(json.writing) {
+                    isWriting(json);
                 } else {
                     addMessage(json);
                 }
@@ -285,8 +288,8 @@
             var messageObject = {
                 author : 'QualityGamer',
                 message : msg,
-                user_id_1 : 2,
-                user_id_2 : 7
+                user_id_1 : 7,
+                user_id_2 : 2
             }
             socket.emit('sendMessage', messageObject);
         }
@@ -355,22 +358,54 @@
         }
 
         scrollTopAnimated = () => {
-
             var scroll = $("#messenger-box");
             var totalOverflow = scroll.css('height');
             var toverflow = totalOverflow.split('px');
-            var velocity = 5; //to force fast and whole animated
+            var velocity = 1000000000; //to force fast and whole animated
             $("#messenger-box").animate(
-                { scrollTop: toverflow[0] * velocity}, 100);
+                { scrollTop: toverflow[0] * velocity}, 1);
         }
 
         addCountNew = (data) => {
+            if(data.count == undefined || data.count == null || data.count == 0 || data.count == false) {
+                return;
+            }
             var id = "#user-"+data.user_id;
             var cc = "clear-count-"+data.user_id;
             $("#"+cc).remove();
             var html = '<span class="badge badge-danger" id="'+cc+'" style="z-index:1000;position:relative;top:17px;left:8px">'+data.count+'</span>';
             $(id).prepend(html);
         }
+
+        isWriting = (data) => {
+            var input = $(".yourmsg");
+            $(".clear-writing").remove();
+            if(data.writing == 1){
+                var html = "<span class='writing-text clear-writing'>" +your_name+ " está digitando...</span>";
+                input.append(html);
+                blink(".clear-writing");
+            }
+        }
+
+        $("#input-msg").focus(() => {
+            var messageObject = {
+                user_id_1 : 7,
+                user_id_2 : 2
+            }
+            socket.emit('startWrite', messageObject);
+        });
+
+        $("#input-msg").focusout(() => {
+            if($("#input-msg").val().length > 0){
+                return;
+            }
+
+            var messageObject = {
+                user_id_1 : 7,
+                user_id_2 : 2
+            }
+            socket.emit('stopWrite', messageObject);
+        });
 
         $(document).on('keypress',function(e) {
             if(e.which == 13) {
@@ -379,6 +414,18 @@
                 }
             }
         });
+
+        blink = (selector) => {
+            $(selector).fadeOut('slow', function() {
+                $(this).fadeIn('slow', function() {
+                    blink(this);
+                });
+            });
+        }
+
+        // $(window).bind('beforeunload', function(){
+        //     return 'Are you sure you want to leave?';
+        // });
     </script>
 
 </body>
