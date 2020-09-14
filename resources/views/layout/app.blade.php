@@ -200,7 +200,7 @@
                             <div class="card-content row">
                                 <div class="col-lg-2 col-md-2 col-sm-4 col-4 card-overflow-y">
                                     <ul class="list-group" style="list-style-type:none;">
-                                    @foreach (App/User::getAllUsers() as $user)
+                                    @foreach (App\User::getAllUsers() as $user)
                                         <li class="chat-avatar" id="user-{{$user->id}}"><span class="badge badge-danger" id="clear-count-{{$user->id}}" style="background-color:transparent;border-color:transparent;color:transparent;z-index:1000;position:relative;top:17px;left:8px">0</span><img src="https://media-exp1.licdn.com/dms/image/C4E03AQF6_Y5xP6pd7w/profile-displayphoto-shrink_200_200/0?e=1605139200&v=beta&t=EAc_MK9AF9YiWgQNrXBZD5YTFcu3jVZ2-isWfA4k7hI" class="figure-img img-fluid rounded" style></li>
                                         <!-- <div align="center"><li class="chat-avatar"><div align="center" class="bg-blue py-1 badge"><strong><span style="font-size:18px;">+</span></strong></li></div> -->
                                     @endforeach
