@@ -5,10 +5,16 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\APIService;
 
 class User extends Authenticatable
 {
     use Notifiable;
+
+    public static function getAllUsers() {
+        $url = "https://qg-usuario.herokuapp.com/api/load/users";
+        return APIService::getHttpRequest($url);
+    }
 
     /**
      * The attributes that are mass assignable.

@@ -173,7 +173,7 @@
             </div>
             </div>
         </div>
-        @guest
+        @auth
         <div id="chat-min-div" class="col-lg-3 col-md-3 col-sm-6 col-6 chat">
             <div class="card card-min"">
             <div style="display:flex; justify-content:space-between">
@@ -200,9 +200,10 @@
                             <div class="card-content row">
                                 <div class="col-lg-2 col-md-2 col-sm-4 col-4 card-overflow-y">
                                     <ul class="list-group" style="list-style-type:none;">
-                                        <li class="chat-avatar" id="user-7"><span class="badge badge-danger" id="clear-count-7" style="background-color:transparent;border-color:transparent;color:transparent;z-index:1000;position:relative;top:17px;left:8px">0</span><img src="https://media-exp1.licdn.com/dms/image/C4E03AQF6_Y5xP6pd7w/profile-displayphoto-shrink_200_200/0?e=1605139200&v=beta&t=EAc_MK9AF9YiWgQNrXBZD5YTFcu3jVZ2-isWfA4k7hI" class="figure-img img-fluid rounded" style></li>
-                                        <li class="chat-avatar"><span class="badge badge-danger" id="clear-count-4" style="background-color:transparent;border-color:transparent;color:transparent;z-index:1000;position:relative;top:17px;left:8px">0</span><img src="https://media-exp1.licdn.com/dms/image/C4E03AQF6_Y5xP6pd7w/profile-displayphoto-shrink_200_200/0?e=1605139200&v=beta&t=EAc_MK9AF9YiWgQNrXBZD5YTFcu3jVZ2-isWfA4k7hI" class="figure-img img-fluid rounded" style></li>
+                                    @foreach (App/User::getAllUsers() as $user)
+                                        <li class="chat-avatar" id="user-{{$user->id}}"><span class="badge badge-danger" id="clear-count-{{$user->id}}" style="background-color:transparent;border-color:transparent;color:transparent;z-index:1000;position:relative;top:17px;left:8px">0</span><img src="https://media-exp1.licdn.com/dms/image/C4E03AQF6_Y5xP6pd7w/profile-displayphoto-shrink_200_200/0?e=1605139200&v=beta&t=EAc_MK9AF9YiWgQNrXBZD5YTFcu3jVZ2-isWfA4k7hI" class="figure-img img-fluid rounded" style></li>
                                         <!-- <div align="center"><li class="chat-avatar"><div align="center" class="bg-blue py-1 badge"><strong><span style="font-size:18px;">+</span></strong></li></div> -->
+                                    @endforeach
                                     </ul>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-sm-8 col-8">
@@ -238,19 +239,20 @@
                     </div>
                     </div><!-- /.card -->
                 </div>
-        @endguest
+        @endauth
     </main>
 
     @yield('scripts')
 
+    @auth
     <script>
+
         $(document).ready(function(){
             hideChat();
-            my_name = null;
+            my_name = '<?php echo Auth::user()->name ?>';
             your_name = null;
-            my_id = 7;
-            your_id = 2;
-
+            my_id = <?php echo Auth::user()->id ?>;
+            your_id = null;
 
             socket = io.connect("https://qg-chat.herokuapp.com/");
             socket.emit('news', {user_id_1: 7});
@@ -271,12 +273,6 @@
         });
 
         openChat = () => {
-             var messageObject = {
-                author : 'Iago',
-                message : 'Oi tudo bem?',
-                user_id_1 : 7,
-                user_id_2 : 2
-            }
             getUser(messageObject.user_id_2);
             socket.emit('openChatRoom', messageObject);
         }
@@ -285,12 +281,6 @@
             var msg = $("#input-msg").val();
             $("#input-msg").val('');
 
-            var messageObject = {
-                author : 'QualityGamer',
-                message : msg,
-                user_id_1 : 7,
-                user_id_2 : 2
-            }
             socket.emit('sendMessage', messageObject);
         }
 
@@ -388,10 +378,6 @@
         }
 
         $("#input-msg").focus(() => {
-            var messageObject = {
-                user_id_1 : 7,
-                user_id_2 : 2
-            }
             socket.emit('startWrite', messageObject);
         });
 
@@ -400,10 +386,6 @@
                 return;
             }
 
-            var messageObject = {
-                user_id_1 : 7,
-                user_id_2 : 2
-            }
             socket.emit('stopWrite', messageObject);
         });
 
@@ -427,6 +409,7 @@
         //     return 'Are you sure you want to leave?';
         // });
     </script>
+    @endauth
 
 </body>
 </html>
