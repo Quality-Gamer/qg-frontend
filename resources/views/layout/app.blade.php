@@ -283,8 +283,8 @@
         setUser = (user_id) => {
             <?php foreach(App\User::getAllUsers() as $user) { ?>
                 if(<?php echo $user->id?> == user_id) {
-                    your_id = <?php $user->id?>;
-                    your_name = '<?php $user->name?>';
+                    your_id = <?php echo $user->id?>;
+                    your_name = '<?php echo $user->name?>';
                 }
             <?php } ?> 
         }
