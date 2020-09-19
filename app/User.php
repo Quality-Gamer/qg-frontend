@@ -13,7 +13,15 @@ class User extends Authenticatable
 
     public static function getAllUsers() {
         $url = "https://qg-usuario.herokuapp.com/api/load/users";
-        return APIService::getHttpRequest($url);
+        $response = APIService::getHttpRequest($url);
+        
+        foreach ($response['body'] as $key => $value) {
+            if(isset(auth()->user()->id) && !empty(auth()->user()->id) && $value->id == auth()->user()->id) {
+                unset($response['body'][$key]);
+            }
+        }
+
+        return $response['body'];
     }
 
     /**

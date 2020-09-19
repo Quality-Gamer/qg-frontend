@@ -201,7 +201,7 @@
                                 <div class="col-lg-2 col-md-2 col-sm-4 col-4 card-overflow-y">
                                     <ul class="list-group" style="list-style-type:none;">
                                     @foreach (App\User::getAllUsers() as $user)
-                                        <li class="chat-avatar" id="user-{{$user->id}}"><span class="badge badge-danger" id="clear-count-{{$user->id}}" style="background-color:transparent;border-color:transparent;color:transparent;z-index:1000;position:relative;top:17px;left:8px">0</span><img src="https://media-exp1.licdn.com/dms/image/C4E03AQF6_Y5xP6pd7w/profile-displayphoto-shrink_200_200/0?e=1605139200&v=beta&t=EAc_MK9AF9YiWgQNrXBZD5YTFcu3jVZ2-isWfA4k7hI" class="figure-img img-fluid rounded" style></li>
+                                        <li class="chat-avatar" id="user-{{$user->id}}"><span class="badge badge-danger" id="clear-count-{{$user->id}}" style="background-color:transparent;border-color:transparent;color:transparent;z-index:1000;position:relative;top:17px;left:8px">0</span><img onclick="openChat(<?php echo $user->id?>)" src="https://media-exp1.licdn.com/dms/image/C4E03AQF6_Y5xP6pd7w/profile-displayphoto-shrink_200_200/0?e=1605139200&v=beta&t=EAc_MK9AF9YiWgQNrXBZD5YTFcu3jVZ2-isWfA4k7hI" class="figure-img img-fluid rounded" style></li>
                                         <!-- <div align="center"><li class="chat-avatar"><div align="center" class="bg-blue py-1 badge"><strong><span style="font-size:18px;">+</span></strong></li></div> -->
                                     @endforeach
                                     </ul>
@@ -209,7 +209,7 @@
                                 <div class="col-lg-10 col-md-10 col-sm-8 col-8">
                                     <div id="messenger-box" class="messenger-box card-overflow-y" style="overflow-x:none;">
                                     <div id="empty-chat" class="card-subtitle mb-2 text-muted">
-                                    <div><h6>Ops! Vocês ainda não mandaram nenhuma mensagem =(</h6></div>
+                                    <div><h6 id="msg-empty"></h6></div>
                                     <!-- <div style="" class="lds-hourglass"></div> loading -->
                                     </div>
                                     </div><!-- /.messenger-box -->
@@ -249,15 +249,14 @@
 
         $(document).ready(function(){
             hideChat();
+            noChatSelected();
             my_name = '<?php echo Auth::user()->name ?>';
             your_name = null;
             my_id = <?php echo Auth::user()->id ?>;
             your_id = null;
 
             socket = io.connect("https://qg-chat.herokuapp.com/");
-            socket.emit('news', {user_id_1: 7});
-            socket.emit('write', {user_id_1: 7, user_id_2: 2});
-            openChat();
+            socket.emit('news', {user_id_1: my_id});
             socket.on('message', (data) => {
                 json = JSON.parse(data);
                 console.log(json)
@@ -272,15 +271,32 @@
             });
         });
 
-        openChat = () => {
-            getUser(messageObject.user_id_2);
-            socket.emit('openChatRoom', messageObject);
+        openChat = (user_id) => {
+            $("#messenger-box ul").remove();
+            setUser(user_id);
+            socket.emit('write', {user_id_1: my_id, user_id_2: user_id});
+            socket.emit('openChatRoom', {user_id_1: my_id, user_id_2: user_id});
+            emptyMessage();
+            $(".send-mgs").show();
+        }
+
+        setUser = (user_id) => {
+            <?php foreach(App\User::getAllUsers() as $user) { ?>
+                if(<?php echo $user->id?> == user_id) {
+                    your_id = <?php $user->id?>;
+                    your_name = '<?php $user->name?>';
+                }
+            <?php } ?> 
         }
 
         sendMessage = () => {
             var msg = $("#input-msg").val();
             $("#input-msg").val('');
-
+            var messageObject = {
+                message : msg,
+                user_id_1 : my_id,
+                user_id_2 : your_id,
+            }
             socket.emit('sendMessage', messageObject);
         }
 
@@ -298,11 +314,16 @@
         addMessage = (message) => {
             $("#empty-chat").hide();
             var image = "https://media-exp1.licdn.com/dms/image/C4E03AQF6_Y5xP6pd7w/profile-displayphoto-shrink_200_200/0?e=1605139200&v=beta&t=EAc_MK9AF9YiWgQNrXBZD5YTFcu3jVZ2-isWfA4k7hI";
-
-            if(my_id == message.user_id) {
-                var html = getSendHTMLMessages(message.user_id,message.message,image,message.datetime);
+            if(my_id == message.user_id_sent) {
+                if (message.user_id_received != your_id) {
+                    return;
+                }
+                var html = getSendHTMLMessages(message.user_id_sent,message.message,image,message.datetime);
             } else {
-                var html = getReceivedHTMLMessages(message.user_id,message.message,image,message.datetime);
+                if (message.user_id_sent != your_id) {
+                    return;
+                }
+                var html = getReceivedHTMLMessages(message.user_id_sent,message.message,image,message.datetime);
             }
 
             $("#messenger-box").append(html);
@@ -313,14 +334,14 @@
             var received_msg_html = '<ul><li><div class="msg-received msg-received-call msg-container"><div class="avatar">'+
             '<img src="'+profile_url+'" alt="">'+
             '<div class="send-time">'+getDateTime(date)+'</div></div><div class="msg-box"><div class="inner-box"> <div class="name">'+
-            '<span class="user-name"></span>' + '</div><div class="meg">'+msg+'</div></div></div></div></li></ul>';
+            '<span class="user-name-received"></span>' + '</div><div class="meg">'+msg+'</div></div></div></div></li></ul>';
             return received_msg_html;
         }
         getSendHTMLMessages = (username,msg,profile_url,date) => {
             var send_msg_html = '<ul><li><div class="msg-sent msg-sent-call msg-container"><div class="avatar">'+
             '<img src="'+profile_url+'" alt="">'+
             '<div class="send-time">'+getDateTime(date)+'</div></div><div class="msg-box"><div class="inner-box"> <div class="name">'+
-            '<span class="user-name"></span>' + '</div><div class="meg">'+msg+'</div></div></div></div></li></ul>';
+            '<span class="user-name-sent">'+my_name+'</span>' + '</div><div class="meg">'+msg+'</div></div></div></div></li></ul>';
             return send_msg_html;
         }
 
@@ -331,16 +352,8 @@
             return brString;
         }
 
-        getUser = (uid) => {
-            $.ajax({
-            method: "POST",
-            url: "https://qg-usuario.herokuapp.com/api/user?user_id=1",
-            crossDomain: true,
-            data: { user_id: 1}
-            }).done( (r) => {
-                your_name = r.name;
-                your_id = r.id;
-            });
+        saveUserId = (uid) => {
+            your_id = uid;
         }
 
         fillUser = (name) => {
@@ -351,13 +364,13 @@
             var scroll = $("#messenger-box");
             var totalOverflow = scroll.css('height');
             var toverflow = totalOverflow.split('px');
-            var velocity = 1000000000; //to force fast and whole animated
+            var velocity = 1000000000; //to force fast and whole animation
             $("#messenger-box").animate(
                 { scrollTop: toverflow[0] * velocity}, 1);
         }
 
         addCountNew = (data) => {
-            if(data.count == undefined || data.count == null || data.count == 0 || data.count == false) {
+            if(!Number.isInteger(data.count)) {
                 return;
             }
             var id = "#user-"+data.user_id;
@@ -378,7 +391,7 @@
         }
 
         $("#input-msg").focus(() => {
-            socket.emit('startWrite', messageObject);
+            socket.emit('startWrite', {user_id_1: my_id, user_id_2: your_id});
         });
 
         $("#input-msg").focusout(() => {
@@ -386,7 +399,7 @@
                 return;
             }
 
-            socket.emit('stopWrite', messageObject);
+            socket.emit('stopWrite', {user_id_1: my_id, user_id_2: your_id});
         });
 
         $(document).on('keypress',function(e) {
@@ -403,6 +416,17 @@
                     blink(this);
                 });
             });
+        }
+
+        emptyMessage = () => {
+            var msg = "Ops! Vocês ainda não mandaram nenhuma mensagem =(";
+            $("#msg-empty").text(msg);
+        }
+
+        noChatSelected = () => {
+            var msg = "Por favor selecione um chat para iniciar uma conversa";
+            $("#msg-empty").text(msg);
+            $(".send-mgs").hide();
         }
 
         // $(window).bind('beforeunload', function(){
