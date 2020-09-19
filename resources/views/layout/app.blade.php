@@ -286,7 +286,7 @@
                     your_id = <?php echo $user->id?>;
                     your_name = '<?php echo $user->name?>';
                 }
-            <?php } ?> 
+            <?php } ?>
         }
 
         sendMessage = () => {
@@ -357,7 +357,7 @@
         }
 
         fillUser = (name) => {
-            $(".user-name").text(name);
+            $(".user-name-received").text(name);
         }
 
         scrollTopAnimated = () => {
