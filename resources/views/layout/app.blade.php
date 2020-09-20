@@ -259,7 +259,6 @@
             socket.emit('news', {user_id_1: my_id});
             socket.on('message', (data) => {
                 json = JSON.parse(data);
-                console.log(json)
                 if(json.count) {
                     addCountNew(json);
                 } else if(json.writing) {
@@ -273,11 +272,12 @@
 
         openChat = (user_id) => {
             $("#messenger-box ul").remove();
+            $("#empty-chat").show();
             setUser(user_id);
             socket.emit('write', {user_id_1: my_id, user_id_2: user_id});
             socket.emit('openChatRoom', {user_id_1: my_id, user_id_2: user_id});
             emptyMessage();
-            $(".send-mgs").show();
+            unlockChat();
         }
 
         setUser = (user_id) => {
@@ -426,9 +426,24 @@
         noChatSelected = () => {
             var msg = "Por favor selecione um chat para iniciar uma conversa";
             $("#msg-empty").text(msg);
-            $(".send-mgs").hide();
+            lockChat();
         }
 
+        lockChat = () => {
+            $("#input-msg").attr("disabled",true);
+            $("#btn-msg").attr("disabled",true);
+        }
+
+        unlockChat = () => {
+            $("#input-msg").attr("disabled",false);
+            $("#btn-msg").attr("disabled",false);
+        }
+
+        $("#input-msg").keydown( () => {
+            if(!your_id){
+                lockChat();
+            }
+        });
         // $(window).bind('beforeunload', function(){
         //     return 'Are you sure you want to leave?';
         // });
