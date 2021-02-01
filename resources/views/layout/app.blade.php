@@ -84,36 +84,46 @@
                             <p>Home</p>
                             </a>
                         </li>
+                        @if (config('features.store'))
                         <li class="nav-item">
                             <a class="nav-link" href="/store">
                             <p>Loja</p>
                             </a>
                         </li>
+                        @endif
+                        @if (config('features.tests'))
                         <li class="nav-item">
                             <a class="nav-link" href="/tests">
                             <p>Conquistas</p>
                             </a>
                         </li>
+                        @endif
+                        @if (config('features.ranking'))
                         <li class="nav-item">
                             <a class="nav-link" href="/ranking">
                             <p>Ranking</p>
                             </a>
                         </li>
+                        @endif
                         <li class="nav-item">
                             <a class="nav-link" href="/profile">
-                            <p><img class="navbar-img" src="./assets/img/avatar/pumpkin.png"></p>
+                            <p><img class="navbar-img" src="./assets/img/avatar/{{auth()->user()->getCharIcon()}}"></p>
                             </a>
                         </li>
+                        @if (config('features.coin'))
                         <li class="nav-item">
                             <a class="nav-link">
                             <p><span class="mr-1 fs-12">2000</span><img class="navbar-img" src="./assets/img/icons/coin_green.png"></p>
                             </a>
                         </li>
+                        @endif
+                        @if (config('features.social'))
                         <li class="nav-item mr-3">
                             <a class="nav-link" href="/profile">
                             <p><img class="navbar-img" src="./assets/img/icons/network.png"></p>
                             </a>
                         </li>
+                        @endif
                         <form class="form-inline ml-auto" action="logout" method="post" data-background-color>
                             @csrf
                             <div class="form-group has-white">
@@ -138,10 +148,10 @@
                 <div>
                     <div class="card-user">
                         <div align="center" class="text-rookie mt-2 bold">Rookie</div>
-                        <div align="center" class="mt-2 bold">Desenvolvedor Backend</div>
-                        <div align="center" class="mt-2 bold">Iago</div>
+                        <div align="center" class="mt-2 bold">{{auth()->user()->getCharJob()}}</div>
+                        <div align="center" class="mt-2 bold">{{auth()->user()->name}}</div>
                         <div class="flex-a">
-                            <div align="center" class="mt-3 mb-3 char"><img src="../assets/img/char/pumpkin.png"></div>
+                            <div align="center" class="mt-3 mb-3 char"><img src="../assets/img/char/{{auth()->user()->getCharImg()}}"></div>
                         </div>
                         <div class="mt-4">
                             <div align="center" class="progress-container col-12">
@@ -174,6 +184,7 @@
             </div>
         </div>
         @auth
+        @if (config('features.chat'))
         <div id="chat-min-div" class="col-lg-3 col-md-3 col-sm-6 col-6 chat">
             <div class="card card-min"">
             <div style="display:flex; justify-content:space-between">
@@ -186,6 +197,7 @@
             </div>
             </div>
         </div>
+       
         <div id="chat-div" class="col-lg-3 col-md-3 col-sm-6 col-6 chat">
                     <div class="card">
                         <div class="card-body container">
@@ -239,6 +251,7 @@
                     </div>
                     </div><!-- /.card -->
                 </div>
+                @endif
         @endauth
     </main>
 
@@ -248,6 +261,7 @@
     <script>
 
         $(document).ready(function(){
+        <?php if (config('features.chat')) { ?> 
             hideChat();
             noChatSelected();
             my_name = '<?php echo Auth::user()->name ?>';
@@ -268,6 +282,7 @@
                 }
                 scrollTopAnimated();
             });
+        <?php } ?>
         });
 
         openChat = (user_id) => {

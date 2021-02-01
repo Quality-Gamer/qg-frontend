@@ -10,6 +10,10 @@ use App\APIService;
 class User extends Authenticatable
 {
     use Notifiable;
+    
+    public function setCharAttribute($value) {
+        $this->attributes['char'] = $value;
+    }
 
     public static function getAllUsers() {
         $url = "https://qg-usuario.herokuapp.com/api/load/users";
@@ -22,6 +26,21 @@ class User extends Authenticatable
         }
 
         return $response['body'];
+    }
+
+    public function getCharJob() {
+        $array = ["1" => "Desenvolvedor Backend", "2" => "Desenvolvedora Frontend", "3" => "Desenvolvedor Fullstack", "4" => "Testador"];
+        return $array[strval($this->char)];
+    }
+
+    public function getCharImg() {
+        $array = ["1" => "pumpkin.png", "2" => "girl.png" , "3" => "robot.png", "4" => "dino.png"];
+        return $array[strval($this->char)];
+    }
+
+    public function getCharIcon() {
+        $array = ["1" => "pumpkin.png", "2" => "girl.png" , "3" => "robot.png", "4" => "dino.png"];
+        return $array[strval($this->char)];
     }
 
     /**

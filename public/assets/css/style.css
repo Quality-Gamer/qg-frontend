@@ -81,6 +81,15 @@
     border: 2px solid white;
 }
 
+.btn-back {
+    border: 2px solid white;
+}
+
+.btn-back:hover {
+    background-color: lightgray;
+    border: 2px solid white;
+}
+
 .bg-blue {
     background-color: #9ee2d7 !important;
 }
@@ -389,7 +398,38 @@ button.btn.img-btn.next-week-btn:hover {
     color: #246598;
 }
 
-.test-icon{
+.test-icon {
     width: 30px;
     height: 30px;
+}
+
+.card-char {
+    border: 1px solid #9ee1d7d6;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    /* background-color: #9ee1d7d6; */
+    height: 21em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.char-register {
+    width: 150px;
+    height: 150px;
+}
+
+.no-link {
+    color: #2c2c2c;
+}
+
+.no-link:hover {
+    text-decoration: none;
+    color: #2c2c2c;
+}
+
+.scrolling {
+    overflow-y: scroll;
+    overflow-x: hidden !important;
 }

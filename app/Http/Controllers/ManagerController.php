@@ -17,6 +17,7 @@ class ManagerController extends Controller
             $user->id = $request->session()->get('user')['id'];
             $user->name = $request->session()->get('user')['name'];
             $user->email = $request->session()->get('user')['email'];
+            $user->char = $request->session()->get('user')['char'];
             $data = array();
             $data["manager_id"] = null;
             $data["new"] = 0;
@@ -25,12 +26,12 @@ class ManagerController extends Controller
             if(!$request->session()->get('manager_id')){
                 $params = array(
                     "ms" => "manager",
-                    "action" => "create",
+                    "action" => "create/match",
                     "params" => array(
                     "user_id" => (string)$user->id,
                     "challenge_id" => "1",
                     ),
-                    "method" => "GET",
+                    "method" => "POST",
                     "cacheable" => 0,
                 );
 

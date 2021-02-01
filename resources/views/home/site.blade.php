@@ -22,6 +22,8 @@
                     <div class="alert alert-danger" role="alert">{{$message}}</div>
                 @endif
                 <button type="submit" class="btn btn-login form-control"><b>Entrar</b></button>
+                <div class="mt-1" align="center"><a href="/register">Cadastre-se</a></div>
+                <div class="mt-1" align="center"><a href="/forgot">Recuperar senha</a></div>
             </form>
         </div>
     </div>
