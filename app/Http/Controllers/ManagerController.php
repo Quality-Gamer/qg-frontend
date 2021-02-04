@@ -18,6 +18,10 @@ class ManagerController extends Controller
             $user->name = $request->session()->get('user')['name'];
             $user->email = $request->session()->get('user')['email'];
             $user->char = $request->session()->get('user')['char'];
+            $user->level = $request->session()->get('user')['level'];
+            $user->score = $request->session()->get('user')['score'];
+            $user->university = $request->session()->get('user')['university'];
+            $user->color = $request->session()->get('user')['color'];
             $data = array();
             $data["manager_id"] = null;
             $data["new"] = 0;
@@ -29,18 +33,19 @@ class ManagerController extends Controller
                     "action" => "create/match",
                     "params" => array(
                     "user_id" => (string)$user->id,
-                    "challenge_id" => "1",
+                    "model_id" => (string)config('general.manager.default'),
                     ),
-                    "method" => "POST",
+                    "method" => "GET",
                     "cacheable" => 0,
                 );
-
                 $response = APIService::postHttpRequest($url,$params,$key);
+
                 $body = $response["body"]->response;
 
                 if($body && $body->status == "OK"){
                     $r = $body->response[0];
                     $managerId = $r->id;
+                    $data['description'] = $r->description;
                     $request->session()->put('manager_id', $managerId);
                     $data["new"] = 1;
                 } else {
@@ -54,19 +59,21 @@ class ManagerController extends Controller
 
                 $p = array(
                     "ms" => "manager",
-                    "action" => "find",
+                    "action" => "get/match",
                     "params" => array(
                     "user_id" => (string)$user->id,
-                    "manager_id" => (string)$data["manager_id"]
+                    "match_id" => (string)$data["manager_id"]
                     ),
                 );
 
                 $resp = APIService::postHttpRequest($url,$p,$key);
                 $body = $resp["body"]->response;
+
                 if($body && $body->status == "OK"){
                     $res = $body->response[0];
                     $week = $res->week;
                     $data["week"] = $week;
+                    $data['description'] = $res->description;
                 } else {
                     $data["message"] = "Erro ao conectar com o servidor.";
                 }
@@ -77,6 +84,7 @@ class ManagerController extends Controller
             $data["url"] = config('microsservices.gateway');
             $data['key'] = config('microsservices.key');
             Auth::login($user);
+
             return view("manager.index",$data);
         }
         return redirect("/");

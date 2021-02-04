@@ -388,6 +388,7 @@ button.btn.img-btn.next-week-btn:hover {
 
 .text-project {
     text-align: justify;
+    font-size: 8.5px !important;
 }
 
 .bg-navy-blue {
@@ -432,4 +433,19 @@ button.btn.img-btn.next-week-btn:hover {
 .scrolling {
     overflow-y: scroll;
     overflow-x: hidden !important;
+}
+
+.level-img {
+    width: 150px;
+    height: auto;
+}
+
+.end-game {
+    font-size: 20px !important;
+}
+
+.flip {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    -moz-transform: scaleX(-1);
 }

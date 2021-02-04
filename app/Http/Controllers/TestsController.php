@@ -15,6 +15,11 @@ class TestsController extends Controller
             $user->id = $request->session()->get('user')['id'];
             $user->name = $request->session()->get('user')['name'];
             $user->email = $request->session()->get('user')['email'];
+            $user->char = $request->session()->get('user')['char'];
+            $user->level = $request->session()->get('user')['level'];
+            $user->score = $request->session()->get('user')['score'];
+            $user->university = $request->session()->get('user')['university'];
+            $user->color = $request->session()->get('user')['color'];
             Auth::login($user);
 
             $key = config('microsservices.key');

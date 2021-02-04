@@ -32,6 +32,10 @@ class HomeController extends Controller
             $user->email = $body->response->email;
             $user->id = $body->response->id;
             $user->setCharAttribute($body->response->char_id);
+            $user->setLevelAttribute(isset($body->response->level->name) ? $body->response->level->name : "Rookie");
+            $user->setScoreAttribute(isset($body->response->score) ? $body->response->score : 0);
+            $user->setUnivesityAttribute(isset($body->response->university->name) ? $body->response->university->name : '');
+            $user->setColorAttribute($body->response->level->color);
             $request->session()->put('user', $user);
             Auth::login($user);
         } else {
@@ -50,6 +54,10 @@ class HomeController extends Controller
             $user->name = $request->session()->get('user')['name'];
             $user->email = $request->session()->get('user')['email'];
             $user->char = $request->session()->get('user')['char'];
+            $user->level = $request->session()->get('user')['level'];
+            $user->score = $request->session()->get('user')['score'];
+            $user->university = $request->session()->get('user')['university'];
+            $user->color = $request->session()->get('user')['color'];
             Auth::login($user);
             return redirect('/manager');
         }
@@ -60,6 +68,25 @@ class HomeController extends Controller
         $request->session()->forget('user');
         $request->session()->flush();
         return redirect('/');
+    }
+
+    public function profile(Request $request) {
+        $user = new \App\User;
+        $user->id = $request->session()->get('user')['id'];
+        $user->name = $request->session()->get('user')['name'];
+        $user->email = $request->session()->get('user')['email'];
+        $user->char = $request->session()->get('user')['char'];
+        $user->level = $request->session()->get('user')['level'];
+        $user->score = $request->session()->get('user')['score'];
+        $user->university = $request->session()->get('user')['university'];
+        $user->color = $request->session()->get('user')['color'];
+        Auth::login($user);
+
+        if(!Auth::user()) {
+            return redirect('/');
+        }
+
+        return view('home.profile');
     }
 
     public function register(Request $request) {

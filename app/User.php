@@ -15,6 +15,22 @@ class User extends Authenticatable
         $this->attributes['char'] = $value;
     }
 
+    public function setUnivesityAttribute($value) {
+        $this->attributes['university'] = $value;
+    }
+
+    public function setColorAttribute($value) {
+        $this->attributes['color'] = $value;
+    }
+
+    public function setLevelAttribute($value) {
+        $this->attributes['level'] = $value;
+    }
+
+    public function setScoreAttribute($value) {
+        $this->attributes['score'] = $value;
+    }
+
     public static function getAllUsers() {
         $url = "https://qg-usuario.herokuapp.com/api/load/users";
         $response = APIService::getHttpRequest($url);
@@ -26,6 +42,14 @@ class User extends Authenticatable
         }
 
         return $response['body'];
+    }
+
+    public function getLevel() {
+        return isset($this->level) ? $this->level : "Rookie";
+    }
+
+    public function getScore() {
+        return isset($this->score) ? $this->score : 0;
     }
 
     public function getCharJob() {

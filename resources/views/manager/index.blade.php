@@ -19,18 +19,32 @@
                     <span id="week-badge-<?php echo $i?>" class="badge badge-transparent">{{$i}}</span>
                 @endfor
             </div>
-            <div align="center" id="week-title"><h2 class="title-card clear-week">Semana {{$week}}</h2></div>
+            <div align="center" id="week-title"><h2 class="title-card clear-week">Ano {{$week}}</h2></div>
                 <a onclick="changeToDescription()" class="badge btn-green badge-button mr-2 text-white">Descrição</a>
                 <a onclick="changeToManager()" class="badge btn-blue badge-button mr-2 text-white">Gerenciar</a>
                 <a onclick="changeToProject()" class="badge btn-pink badge-button mr-2 text-white">Projeto</a>
             <div class="mt-4">
-                <button onclick="nextWeek()" class="btn img-btn next-week-btn"><div>Avançar semana</div><img src="assets/img/icons/arrow.png" alt="Avançar semana"> </button>
+                <button onclick="nextWeek()" class="btn img-btn next-week-btn"><div>Avançar ano</div><img src="assets/img/icons/arrow.png" alt="Avançar ano"> </button>
             </div>
+        </div>
+        <div class="d-none" id="before-game">
+            <div align="center"><h2 class="title-card">Bem-vindo {{Auth::user()->name}}</h2></div>
+                <div id="end-game" class="end-game text-blue">
+                    <button onclick="startGame()" class="btn img-btn next-week-btn"><div>Criar novo game</div><img src="assets/img/icons/arrow.png" alt="Avançar ano" class=""> </button>
+                </div>
+        </div>
+        <div class="d-none" id="end-game">
+            <div align="center"><h2 class="title-card">Fim de Jogo</h2></div>
+                <div id="end-game" class="end-game text-blue">
+                    Pontos consquitados <span id="end-pts"></span> pts
+                    <br/>
+                    <button onclick="backToMain()" class="btn img-btn next-week-btn"><div>Voltar</div><img src="assets/img/icons/arrow.png" alt="Avançar ano" class="flip"> </button>
+                </div>
         </div>
         <div class="d-none" id="description">
             <div align="center"><h2 class="title-card">Descrição</h2></div>
                 <div>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in iaculis mi, pharetra luctus ligula. Cras nunc arcu, imperdiet sed magna at, porta varius ex. Donec imperdiet justo id sapien pharetra, eu posuere nunc mollis. Donec mollis luctus augue, non egestas nunc mollis tempus. Sed ac eros sed magna iaculis luctus in quis tellus. Duis scelerisque et ipsum nec maximus. In hac habitasse platea dictumst. Sed feugiat, leo vitae interdum consectetur, risus tellus aliquam odio, non placerat odio dolor quis lorem. Morbi blandit magna sed orci sagittis ultrices. Suspendisse potenti. Quisque augue nulla, ultrices sed urna laoreet, mattis lobortis urna. Fusce dui nulla, molestie et sem quis, imperdiet gravida massa. Sed sodales quam vitae ligula vulputate, ac aliquam metus porttitor. Suspendisse vestibulum, nibh in suscipit dictum, quam enim maximus justo, cursus consectetur est lacus suscipit ipsum. Quisque tristique ullamcorper justo id laoreet.
+                    <?php echo isset($description) ? $description : '' ?>
                 </div>
         </div>
         <div class="d-none" id="manager">
@@ -86,8 +100,9 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-4">
-                    <h5>Status</h5>
-                    <div>
+                    <h5>Level</h5>
+                    <div id="level-div"></div>
+                    <!-- <div>
                             <div align="center" class="progress-container col-12">
                                 <span class="progress-badge" id="status-project"></span>
                                 <div class="progress mt-1 pb">
@@ -96,7 +111,7 @@
                                 </div>
                                 <span class="progress-badge mt-1" id="status-percentage" ></span>
                             </div>
-                        </div>
+                        </div> -->
                 </div>
             </div>
             <h5>Ocorrências</h5>
@@ -125,10 +140,14 @@
         $("#description").hide();
         $("#manager").hide();
         $("#project").hide();
+        $("#end-game").hide();
         $("#new-game").hide();
+        $("#before-game").hide();
         $("#description").removeClass("d-none");
         $("#manager").removeClass("d-none");
         $("#project").removeClass("d-none");
+        $("#end-game").removeClass("d-none");
+        $("#before-game").removeClass("d-none");
         
         updateAmount();
         
@@ -161,13 +180,33 @@
         arrayName.set("tt",["Testador",1]);
     });
 
+    const backToMain = () => {
+        window.location.href = '/manager/reset';
+    }
+
     const changeToDescription = () => {
         $("#main").hide();
         $("#manager").hide();
         $("#project").hide();
+        $("#end-game").hide();
+        $("#before-game").hide();
         $("#description").show();
         $("#btn-close").show();
     };
+
+    const changeToEnd = () => {
+        $("#main").hide();
+        $("#manager").hide();
+        $("#project").hide();
+        $("#description").hide();
+        $("#btn-close").hide();
+        $("#before-game").hide();
+        $("#end-game").show();
+    };
+
+    const startGame = () => {
+        $("#new-game").show();
+    }
 
     const changeToManager = () => {
         if(!load){
@@ -179,21 +218,12 @@
                 headers: {
                     'Content-Type' : 'application/json',
                 },
-                data: { method: "POST", params : { ms: "manager", action: "store"}},
+                data: { method: "POST", params : { ms: "manager", action: "get/store", params: {user_id: <?php echo Auth::user()->id ?>, match_id: '<?php echo $manager_id?>'}}},
             }).done( r => {
                 var i = r.response[0];
-                appendItem("bk",i.bk);
-                appendItem("dg",i.dg);
-                appendItem("tt",i.tt);
-                appendItem("ra",i.ra);
-                appendItem("po",i.po);
-                appendItem("cc",i.cc);
-                appendItem("dv",i.dv);
-                appendItem("ft",i.ft);
-                appendItem("ld",i.ld);
-                appendItem("li",i.li);
-                appendItem("rk",i.rk);
-                appendItem("sc",i.sc);
+                i.forEach((item) => {
+                    appendItem(item);
+                });
                $(".card-manager").css("width", "auto");
                 load = 1;
             }).fail( (err) => {
@@ -206,6 +236,8 @@
         $("#manager").show();
         $("#project").hide();
         $("#description").hide();
+        $("#end-game").hide();
+        $("#before-game").hide();
         $("#btn-close").show();
     };
 
@@ -217,20 +249,24 @@
             headers: {
                     'Content-Type' : 'application/json',
                 },
-            data: { method: "POST", params : { ms: "manager", action: "find", params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>'} } }
+            data: { method: "POST", params : { ms: "manager", action: "get/match", params: {user_id: <?php echo Auth::user()->id ?>, match_id: '<?php echo $manager_id?>', week: '1'} } }
         }).done( r => {
             var res = r.response[0];
-            var t = res.team;
-            var l = res.license;
+            var products = res.resources.products;
+            var team = res.resources.team.members;
             $('.clear-loaded').remove();
-            appendProjectItem("bk",t.backend,1);
-            appendProjectItem("ft",t.frontend,1);
-            appendProjectItem("dg",t.designer,1);
-            appendProjectItem("tt",t.tester,1);
-            appendProjectItem("ra",t.requirement_analyst,1);
-            appendProjectItem("po",t.product_owner,1);
-            appendProjectItem("li",l.ide);
-            appendProjectItem("ld",l.design_software);
+            
+            if(team != null && team != undefined  && team != 'null' && team != 'undefined' && team != '') {
+                team.forEach((i) => {
+                    appendProjectItem(i,true);
+                })
+            }
+
+            if(products != null && products != undefined  && products != 'null' && products != 'undefined' && products != '') {
+                products.forEach((i) => {
+                    appendProjectItem(i,false);
+                })
+            }
 
             $('.clear-div-occurrences').remove();
             if(res.manager_occurrence != null){
@@ -245,9 +281,7 @@
                 });
             }
 
-            var progress = Math.round(res.progress * 100);
-
-            updateStatus(res.progress_status, progress);
+            getLevelImage(res.level);
             
         }).fail( (err) => {
             console.log(err);
@@ -255,44 +289,63 @@
 
         $("#main").hide();
         $("#manager").hide();
+        $("#end-game").hide();
         $("#project").show();
+        $("#before-game").hide();
         $("#description").hide();
         $("#btn-close").show();
     };
+    
+    const getLevelImage = (level) => {
+        
+        var html = `
+            <img class='clear-img-level level-img' src="assets/img/level/`+getImage(level)+`">
+        `;
+        $(".clear-img-level").remove();
+        $("#level-div").append(html);
+    }
+
+    const getImage = (level) => {
+        var array = [];
+        array.push('_none.png');
+        array.push('_g.png');
+        array.push('_f.png');
+        array.push('_e.png');
+        array.push('_d.png');
+        array.push('_c.png');
+        array.push('_b.png');
+        array.push('_a.png');
+        return array[level];
+    }
 
     const closeTab = () => {
         $("#main").show();
         $("#btn-close").hide();
         $("#description").hide();
         $("#manager").hide();
+        $("#end-game").hide();
         $("#project").hide();
     };
 
-    const appendItem = (key,value) => {
-        var item = arrayName.get(key);
+    const appendItem = (item) => {
         var img = "clock.png";
         var cs = "minimize-icon-clock";
         var id = "#card-actions";
         var type = "A";
 
-        if(item[1] == 1){
+        if(item.type == "T" || item.type == "P"){
             img = "money.png";
             cs = "minimize-icon";
             id = "#card-team";
-            type = "T"
-
-            if(key == "li" || key == "ld"){
-                type = "L"
-            }
 
         }
 
         var html = "<tr class='col-12' px-1'>"+
                     "<div class='row'>"+
                     "<div style=\"display:flex;justify-content:space-between\">"+
-                    "<div><td class='px-2'>"+item[0]+"</td>"+
-                    "<td class='px-1'>"+value+"<img class=" + "'" + cs + " img-fluid'" + "src=" + "assets/img/icons/"+ img + ">"+"</td></div>"+
-                    "<div><td class='px-0'>"+"<img onclick=\"buyItem('"+ key + "','" + value + "','" + type +"')\" class=\"img-fluid minimize-icon-done\" src=\"assets/img/icons/done.png\">"+"</td></div>"+
+                    "<div><td class='px-2'>"+item.name+"</td>"+
+                    "<td class='px-1'>"+item.price+"<img class=" + "'" + cs + " img-fluid'" + "src=" + "assets/img/icons/"+ img + ">"+"</td></div>"+
+                    "<div><td class='px-0'>"+"<img onclick=\"buyItem('"+ item.id + "','" + item.price + "','" + item.type +"')\" class=\"img-fluid minimize-icon-done\" src=\"assets/img/icons/done.png\">"+"</td></div>"+
                     +"</div></tr>"
 
         $(id).append(html);
@@ -324,15 +377,14 @@
         $("#new-game").hide();
     }
 
-    const appendProjectItem = (key,value,team = 0) => {
-        var item = arrayName.get(key);
+    const appendProjectItem = (item,team = false) => {
         var id = "#list-others";
 
-        if(team == 1){
+        if(team){
             id = "#list-team";
         }
         
-        var html = "<p class=\"list-item my-0 ml-4 font-bold text-project clear-loaded\">" + value + "&nbsp;&nbsp;" + item[0] + "</p>";
+        var html = "<p class=\"list-item my-0 ml-4 font-bold text-project clear-loaded\">" + item.quantity + "&nbsp;&nbsp;" + item.name + "</p>";
 
         $(id).append(html);
     }
@@ -384,6 +436,14 @@
         $('#status-pg-bar').attr('aria-valuenow', perc).css('width', perc);
     }
 
+    const getType = (tp) => {
+        if (tp == "T" || tp == "P") {
+            return "R";
+        }
+
+        return "A";
+    }
+
     const buyItem = (key,price,type) => {
         $.ajax({
             method: "GET",
@@ -392,10 +452,9 @@
             headers: {
                     'Content-Type' : 'application/json',
                 },
-            data: { method: "POST", params : { ms: "manager", action: "transaction", params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>', item: key, type: type}}}
+            data: { method: "POST", params : { ms: "manager", action: "create/transaction", params: {user_id: <?php echo Auth::user()->id ?>, match_id: '<?php echo $manager_id?>', item: key, type: getType(type)}}}
         }).done( r => {
            var res = r.response[0];
-           console.log(res);
            if(res.done == 1){
                updateAmount();
            } else {
@@ -418,7 +477,7 @@
             headers: {
                     'Content-Type' : 'application/json',
                 },
-            data: { method: "POST", params : { ms: "manager", action: "find", params: {user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>' }}}
+            data: { method: "POST", params : { ms: "manager", action: "get/match", params: {user_id: <?php echo Auth::user()->id ?>, match_id: '<?php echo $manager_id?>' }}}
         }).done( r => {
             var idm = "#money-project";
             var idc = "#clock-project";
@@ -460,7 +519,7 @@
     }
 
     const nextWeek = () => {
-        var c = confirm('Tem certeza que deseja avançar para próxima semana?'); 
+        var c = confirm('Tem certeza que deseja avançar para o próximo ano?'); 
         
         if(!c){
             return;
@@ -473,18 +532,29 @@
             headers: {
                     'Content-Type' : 'application/json',
                 },
-            data: { method: "POST", params : { ms: "manager", action: "next", params:{user_id: <?php echo Auth::user()->id ?>, manager_id: '<?php echo $manager_id?>'}}}
+            data: { method: "POST", params : { ms: "manager", action: "run/game", params:{user_id: <?php echo Auth::user()->id ?>, match_id: '<?php echo $manager_id?>'}}}
         }).done( r => {
-            var res = r.response[0];
-            updateWeekInView(res.week,res.money,res.time);
+            var res = r.response.match;
+            var match = res[0];
+            if(res.end == 0){
+                updateWeekInView(match.week,match.money,match.time);
+            } else {
+                endGame(match.level);
+            }
         }).fail( (err) => {
             console.log(err);
         });
     }
 
+    const endGame = (level) => {
+        score = level * 2;
+        $("#end-pts").text(score);
+        changeToEnd();
+    }
+
     const updateWeekInView = (week,value,time) => {
         var old = week - 1;
-        var html = "<h2 class=\"title-card clear-week\">Semana " + week + "</h2>";
+        var html = "<h2 class=\"title-card clear-week\">Ano " + week + "</h2>";
         var id = "#week-badge-" + week;
         $(".clear-week").remove();
         $(".clear-amount").remove();

@@ -147,7 +147,7 @@
             <div class="col-lg-3 col-md-12 col-sm-12 col-12 mb-5">
                 <div>
                     <div class="card-user">
-                        <div align="center" class="text-rookie mt-2 bold">Rookie</div>
+                        <div align="center" style="color:{{auth()->user()->color}}" class="mt-2 bold">{{auth()->user()->getLevel()}}</div>
                         <div align="center" class="mt-2 bold">{{auth()->user()->getCharJob()}}</div>
                         <div align="center" class="mt-2 bold">{{auth()->user()->name}}</div>
                         <div class="flex-a">
@@ -155,9 +155,9 @@
                         </div>
                         <div class="mt-4">
                             <div align="center" class="progress-container col-12">
-                                <span class="progress-badge text-rookie">37pts</span>
+                                <span style="color:{{auth()->user()->color}}" class="progress-badge">{{auth()->user()->getScore()}}pts</span>
                                 <div class="progress mt-0 pb">
-                                    <div class="progress-bar progress-bar-striped bg-rookie" role="progressbar" aria-valuenow="37" aria-valuemin="0" aria-valuemax="100" style="width: 37%;">
+                                    <div class="progress-bar progress-bar-striped" style="background-color:{{auth()->user()->color}}" role="progressbar" aria-valuenow="{{auth()->user()->getScore()}}" aria-valuemin="0" aria-valuemax="100" style="width: {{auth()->user()->getScore()}}%;">
                                     </div>
                                 </div>
                             </div>
@@ -167,6 +167,7 @@
                                 <span align="center" ><img class="trophy-size" src="../assets/img/icons/trophy.png"><span class="bold fs-18"> 2º </span></span>
                             </div>
                         </div>
+                        @if (config('features.tests'))
                         <div class="flex-a mt-4">
                             <div class="badges">
                                 <span align="center" ><img class="badge-size mx-1" src="../assets/img/badges/php.png"></span>
@@ -174,6 +175,7 @@
                                 <span align="center" ><img class="badge-size mx-1" src="../assets/img/badges/python.png"></span>
                             </div>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
