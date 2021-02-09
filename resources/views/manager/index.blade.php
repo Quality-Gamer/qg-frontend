@@ -27,7 +27,7 @@
                 <button onclick="nextWeek()" class="btn img-btn next-week-btn"><div>Avançar ano</div><img src="assets/img/icons/arrow.png" alt="Avançar ano"> </button>
             </div>
             <div class="mt-4">
-                <a href="/manager/reset" class="badge badge-danger">Desistir</a>
+                <button type="button" onclick="giveUp()" class="badge badge-danger">Desistir</a>
             </div>
         </div>
     </div>
@@ -573,7 +573,8 @@
         }).done( r => {
             var res = r.response.match;
             var match = res[0];
-            if(res.end == 0){
+            var end = r.response.end;
+            if(end == 0){
                 updateWeekInView(match.week,match.money,match.time);
             } else {
                 endGame(match.level);
@@ -629,7 +630,15 @@
         $(id).removeClass("badge-transparent");
         $(id).addClass("badge-blue");
         $("#week-title").append(html);
-    }   
+    }  
+
+    const giveUp = () => {
+        var ok = confirm("Tem certeza que deseja desistir?");
+        
+        if(ok) {
+            window.location.href = "/manager/reset";
+        }
+    }
     
 </script>
 @endsection
