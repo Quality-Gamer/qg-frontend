@@ -103,7 +103,7 @@
                     <div class="collapse navbar-collapse" id="navbar" data-nav-image="assets/img/blurred-image-1.jpg">
                         <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/manager">
+                            <a class="nav-link" href="/">
                             <p>Home</p>
                             </a>
                         </li>
@@ -180,7 +180,7 @@
                             <div align="center" class="progress-container col-12">
                                 <span style="color:{{auth()->user()->color}}" class="progress-badge">{{auth()->user()->getScore()}}pts</span>
                                 <div class="progress mt-0 pb">
-                                    <div class="progress-bar progress-bar-striped" style="background-color:{{auth()->user()->color}}; width: {{auth()->user()->getScore()}}%;" role="progressbar" aria-valuenow="{{auth()->user()->getScore()}}" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar progress-bar-striped" style="background-color:{{auth()->user()->color}}; width: {{auth()->user()->getBarValue()}}%;" role="progressbar" aria-valuenow="{{auth()->user()->getScore()}}" aria-valuemin="0" aria-valuemax="100" role="progressbar">
                                     </div>
                                 </div>
                             </div>

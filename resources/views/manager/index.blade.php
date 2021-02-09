@@ -7,7 +7,7 @@
     </div>
     <div align="center"><h1 class="title-page">MPS Manager</h1></div>
     <div class="jumbotron p-4 card-default col-lg-12 col-md-12 col-sm-12 bg-lg-green">
-    <div id="btn-close" class="btn-close pos-close"><a onclick="closeTab()">X</a></div>
+    <div id="btn-close" class="btn-close pos-close d-none"><a onclick="closeTab()">X</a></div>
     <div align="center" id="content-game" class="d-none">
             <div id="main">
             <div class="flex-a w-50 mb-3">
@@ -26,14 +26,17 @@
             <div class="mt-4">
                 <button onclick="nextWeek()" class="btn img-btn next-week-btn"><div>Avançar ano</div><img src="assets/img/icons/arrow.png" alt="Avançar ano"> </button>
             </div>
+            <div class="mt-4">
+                <a href="/manager/reset" class="badge badge-danger">Desistir</a>
+            </div>
         </div>
     </div>
-        <div class="d-none" id="before-game">
+        <!-- <div class="d-none" id="before-game">
             <div align="center"><h2 class="title-card">Bem-vindo {{Auth::user()->name}}</h2></div>
                 <div align="center" class="end-game text-blue">
                     <button onclick="startGameManager()" class="btn img-btn next-week-btn"><div>Criar novo game</div><img class="play-btn my-3`" src="assets/img/icons/play-button.png" alt="Avançar ano" class=""> </button>
                 </div>
-        </div>
+        </div> -->
         <div class="d-none" id="end-game">
             <div align="center"><h2 class="title-card">Fim de Jogo</h2></div>
                 <div class="end-game text-blue">
@@ -142,16 +145,17 @@
         $("#project").hide();
         $("#end-game").hide();
         $("#new-game").hide();
-        $("#content-game").hide();
+        $("#content-game").show();
+        $("#main").show();
         $("#description").removeClass("d-none");
+        $("#btn-close").removeClass("d-none");
         $("#manager").removeClass("d-none");
         $("#project").removeClass("d-none");
         $("#end-game").removeClass("d-none");
         $("#new-game").removeClass("d-none");
         $("#before-game").removeClass("d-none");
         $("#content-game").removeClass("d-none");
-        $("#before-game").show();
-        changeToBefore();
+        $("#before-game").hide();
         
         updateAmount();
         
@@ -159,12 +163,10 @@
         time = 0;
         round = 0;
 
-        <?php if(!$new) {?>
-           $("#content-game").show();
-           $("#before-game").hide();
-           $("#end-game").hide();
-           $("#new-game").hide();
-           $("#main").show();
+        <?php if($new) {?>
+           $("#content-game").hide();
+           $("#new-game").show();
+           interval = window.setInterval(loading, 300);
         <?php } ?>
         
         <?php if(isset($message)) {?>
@@ -400,10 +402,6 @@
         $("#new-game").show();
         interval = window.setInterval(loading, 300);
     }
-
-    $(window).bind('beforeunload', function(){
-        unset();
-    });
 
     const unset = () => {
         $.ajax({

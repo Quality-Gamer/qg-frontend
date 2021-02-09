@@ -6,11 +6,38 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\APIService;
+use Illuminate\Support\Facades\Log;
 
 class User extends Authenticatable
 {
     use Notifiable;
-    
+    private $levels = [
+        0,
+        0,
+        45,
+        100,
+        180,
+        300,
+        470,
+        700,
+        1300,
+        2000,
+        3500
+    ];
+
+    private $levelsName = [
+        "Rookie" => 1,
+        "Beginner" => 2,
+        "Junior" => 3,
+        "Senior" => 4,
+        "Semi Pro" => 5,
+        "Pro" => 6,
+        "National" => 7,
+        "World Pro" => 8,
+        "Master" => 9,
+        "Top Master" => 10,
+    ];
+
     public function setCharAttribute($value) {
         $this->attributes['char'] = $value;
     }
@@ -69,6 +96,26 @@ class User extends Authenticatable
     public function getCharIcon() {
         $array = ["1" => "pumpkin.png", "2" => "girl.png" , "3" => "robot.png", "4" => "dino.png"];
         return $array[strval($this->char)];
+    }
+
+    private function getLevelScore() {
+        $level = $this->levelsName[$this->level];
+        $nextLevel = $level + 1;
+        return $this->levels[$nextLevel];
+    }
+
+    private function getCurrentLevelScore() {
+        $level = $this->levelsName[$this->level];
+        return $this->levels[$level];
+    }
+
+    public function getBarValue() {
+        $current = $this->score - $this->getCurrentLevelScore();
+        $target = $this->getLevelScore() - $this->getCurrentLevelScore();
+        if(!$target) {
+            $target = 1;
+        }
+        return ($current/$target) * 100;
     }
 
     /**
