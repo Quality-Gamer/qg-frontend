@@ -31,6 +31,10 @@ class User extends Authenticatable
         $this->attributes['score'] = $value;
     }
 
+    public function setRankAttribute($value) {
+        $this->attributes['rank'] = $value;
+    }
+
     public static function getAllUsers() {
         $url = "https://qg-usuario.herokuapp.com/api/load/users";
         $response = APIService::getHttpRequest($url);

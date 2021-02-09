@@ -36,6 +36,7 @@ class HomeController extends Controller
             $user->setScoreAttribute(isset($body->response->score) ? $body->response->score : 0);
             $user->setUnivesityAttribute(isset($body->response->university->name) ? $body->response->university->name : '');
             $user->setColorAttribute($body->response->level->color);
+            $user->setRankAttribute($body->response->rank->id);
             $request->session()->put('user', $user);
             Auth::login($user);
         } else {
@@ -60,6 +61,7 @@ class HomeController extends Controller
             $user->score = $request->session()->get('user')['score'];
             $user->university = $request->session()->get('user')['university'];
             $user->color = $request->session()->get('user')['color'];
+            $user->rank = $request->session()->get('user')['rank'];
             Auth::login($user);
             return view('home.index');
         }
@@ -82,6 +84,7 @@ class HomeController extends Controller
         $user->score = $request->session()->get('user')['score'];
         $user->university = $request->session()->get('user')['university'];
         $user->color = $request->session()->get('user')['color'];
+        $user->rank = $request->session()->get('user')['rank'];
         Auth::login($user);
 
         if(!Auth::user()) {

@@ -20,6 +20,7 @@ class TestsController extends Controller
             $user->score = $request->session()->get('user')['score'];
             $user->university = $request->session()->get('user')['university'];
             $user->color = $request->session()->get('user')['color'];
+            $user->rank = $request->session()->get('user')['rank'];
             Auth::login($user);
 
             $key = config('microsservices.key');
