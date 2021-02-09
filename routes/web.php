@@ -25,3 +25,4 @@ Route::post('/create/user', 'HomeController@createUser');
 Route::get('/forgot', 'HomeController@forgot');
 Route::get('/ranking','RankingController@index');
 Route::get('/profile', 'HomeController@profile');
+Route::get('/token/{token}', 'HomeController@token');

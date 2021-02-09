@@ -42,9 +42,11 @@ class HomeController extends Controller
             $data["message"] = "Usuário e/ou senha inválidos";
         }
         
-        $view = Auth::user() ? "/manager" : "/";
+        // $view = Auth::user() ? "/manager" : "/";
 
-        return Auth::user() ? redirect($view) : view($view,$data);
+        // return Auth::user() ? redirect($view) : view($view,$data);
+
+        return view("home.index",$data);
     }
 
     public function index(Request $request) { 
@@ -59,7 +61,7 @@ class HomeController extends Controller
             $user->university = $request->session()->get('user')['university'];
             $user->color = $request->session()->get('user')['color'];
             Auth::login($user);
-            return redirect('/manager');
+            return view('home.index');
         }
         return view('home.site');
     }
@@ -142,5 +144,29 @@ class HomeController extends Controller
     public function forgot(Request $request) {
 
         return view('home.forgot', []);
+    }
+
+    public function token(Request $request, $token) {
+        $url = config('microsservices.gateway');
+        $key = config('microsservices.key');
+        $params = array(
+            "ms" => "main",
+            "action" => "token",
+            "params" => array(
+                "token" => $token,                
+            ),
+            "method" => "GET",
+            "cacheable" => 0,
+        );
+
+        $response = APIService::postHttpRequest($url,$params,$key);
+        $body = $response["body"]->response;
+        $success = $body->status == "OK" ? true : false;
+        $data = [];
+        $data['success'] = $success;
+        $data['message'] = $body->message;
+        $data['token'] = $token;
+
+        return view('home.token', $data);
     }
 }

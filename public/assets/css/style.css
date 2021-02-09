@@ -236,6 +236,15 @@
     text-transform: uppercase;
 }
 
+.play-btn {
+    color: #246598;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    width: 64px;
+    height: 64px;
+}
+
 button.btn.img-btn.next-week-btn:hover {
     background-color: #246598;
 }

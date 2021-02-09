@@ -5,10 +5,10 @@
     <div id="messages">
         
     </div>
-    <div align="center"><h1 class="title-page">Manager</h1></div>
+    <div align="center"><h1 class="title-page">MPS Manager</h1></div>
     <div class="jumbotron p-4 card-default col-lg-12 col-md-12 col-sm-12 bg-lg-green">
     <div id="btn-close" class="btn-close pos-close"><a onclick="closeTab()">X</a></div>
-    <div align="center" id="content-game">
+    <div align="center" id="content-game" class="d-none">
             <div id="main">
             <div class="flex-a w-50 mb-3">
                 @for ($i = 1; $i <= $week; $i++)
@@ -27,15 +27,16 @@
                 <button onclick="nextWeek()" class="btn img-btn next-week-btn"><div>Avançar ano</div><img src="assets/img/icons/arrow.png" alt="Avançar ano"> </button>
             </div>
         </div>
+    </div>
         <div class="d-none" id="before-game">
             <div align="center"><h2 class="title-card">Bem-vindo {{Auth::user()->name}}</h2></div>
-                <div id="end-game" class="end-game text-blue">
-                    <button onclick="startGame()" class="btn img-btn next-week-btn"><div>Criar novo game</div><img src="assets/img/icons/arrow.png" alt="Avançar ano" class=""> </button>
+                <div align="center" class="end-game text-blue">
+                    <button onclick="startGameManager()" class="btn img-btn next-week-btn"><div>Criar novo game</div><img class="play-btn my-3`" src="assets/img/icons/play-button.png" alt="Avançar ano" class=""> </button>
                 </div>
         </div>
         <div class="d-none" id="end-game">
             <div align="center"><h2 class="title-card">Fim de Jogo</h2></div>
-                <div id="end-game" class="end-game text-blue">
+                <div class="end-game text-blue">
                     Pontos consquitados <span id="end-pts"></span> pts
                     <br/>
                     <button onclick="backToMain()" class="btn img-btn next-week-btn"><div>Voltar</div><img src="assets/img/icons/arrow.png" alt="Avançar ano" class="flip"> </button>
@@ -121,8 +122,7 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div align="center" id="new-game" class="mt-5">
+    <div align="center" id="new-game" class="mt-5 d-none">
         <div><h3 class="mr-2 text-blue" style="text-transform: uppercase"><strong>Criando novo game</strong></h3></div>
             <div class="col-10 mt-5">
                 <img id="loading" src="assets/img/icons/circle.png">
@@ -142,12 +142,16 @@
         $("#project").hide();
         $("#end-game").hide();
         $("#new-game").hide();
-        $("#before-game").hide();
+        $("#content-game").hide();
         $("#description").removeClass("d-none");
         $("#manager").removeClass("d-none");
         $("#project").removeClass("d-none");
         $("#end-game").removeClass("d-none");
+        $("#new-game").removeClass("d-none");
         $("#before-game").removeClass("d-none");
+        $("#content-game").removeClass("d-none");
+        $("#before-game").show();
+        changeToBefore();
         
         updateAmount();
         
@@ -155,12 +159,14 @@
         time = 0;
         round = 0;
 
-        <?php if($new) {?>
-           $("#content-game").hide();
-           $("#new-game").show();
-           interval = window.setInterval(loading, 300);
+        <?php if(!$new) {?>
+           $("#content-game").show();
+           $("#before-game").hide();
+           $("#end-game").hide();
+           $("#new-game").hide();
+           $("#main").show();
         <?php } ?>
-
+        
         <?php if(isset($message)) {?>
             alert("<?php echo $message?>");
         <?php } ?>
@@ -202,6 +208,16 @@
         $("#btn-close").hide();
         $("#before-game").hide();
         $("#end-game").show();
+    };
+
+    const changeToBefore = () => {
+        $("#main").hide();
+        $("#manager").hide();
+        $("#project").hide();
+        $("#description").hide();
+        $("#btn-close").hide();
+        $("#before-game").show();
+        $("#end-game").hide();
     };
 
     const startGame = () => {
@@ -374,7 +390,30 @@
 
     const initGame = () => {
         $("#content-game").show();
+        $("#main").show();
         $("#new-game").hide();
+    }
+
+    const startGameManager = () => {
+        $("#content-game").hide();
+        $("#before-game").hide();
+        $("#new-game").show();
+        interval = window.setInterval(loading, 300);
+    }
+
+    $(window).bind('beforeunload', function(){
+        unset();
+    });
+
+    const unset = () => {
+        $.ajax({
+            method: "GET",
+            url: "/manager/reset",
+            crossDomain: true,
+            headers: {
+                    'Content-Type' : 'application/json',
+                },
+        })
     }
 
     const appendProjectItem = (item,team = false) => {
@@ -547,9 +586,35 @@
     }
 
     const endGame = (level) => {
-        score = level * 2;
+        var score = level * 2;
+        updateScoreUser(score);
+        updateScoreRanking(score);
         $("#end-pts").text(score);
         changeToEnd();
+    }
+
+    const updateScoreUser = (score) => {
+        $.ajax({
+            method: "GET",
+            url: "/api/http/request",
+            crossDomain: true,
+            headers: {
+                    'Content-Type' : 'application/json',
+                },
+            data: { method: "POST", params : { ms: "main", action: "update/score", params: {user_id: <?php echo Auth::user()->id ?>, score: score} } }
+        });
+    }
+
+    const updateScoreRanking = (score) => {
+        $.ajax({
+            method: "GET",
+            url: "/api/http/request",
+            crossDomain: true,
+            headers: {
+                    'Content-Type' : 'application/json',
+                },
+            data: { method: "POST", params : { ms: "ranking", action: "post/rank", params: {user_id: <?php echo Auth::user()->id ?>, score: score} } }
+        });
     }
 
     const updateWeekInView = (week,value,time) => {

@@ -22,7 +22,30 @@ class RankingController extends Controller
             $user->score = $request->session()->get('user')['score'];
             $user->university = $request->session()->get('user')['university'];
             $user->color = $request->session()->get('user')['color'];
-            $data = array();
+
+            $page = $request->input('page');
+            $page = $page - 1;
+            $params = array(
+                "ms" => "ranking",
+                "action" => "get/rank",
+                "params" => array(
+                    "page" => $page,
+                ),
+                "method" => "GET",
+                "cacheable" => 0,
+            );
+    
+            $response = APIService::postHttpRequest($url,$params,$key);
+            $body = $response["body"]->response;
+            $total = $body->total;
+            $rank = $body->rank;
+
+
+            $data = array(
+                "total" => $total,
+                "rank" => $rank,
+            );
+
             Auth::login($user);
             return view("ranking.index",$data);
         }
