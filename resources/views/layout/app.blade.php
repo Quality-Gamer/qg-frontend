@@ -187,7 +187,13 @@
                         </div>
                         <div class="flex-a mt-4">
                             <div>
-                                <span align="center" ><img class="trophy-size" src="../assets/img/icons/trophy.png"><span class="bold fs-18"> {{auth()->user()->rank}}º </span></span>
+                                <span align="center" ><img class="trophy-size" src="../assets/img/icons/trophy.png"><span class="bold fs-18"> 
+                                <?php if(Auth()->user()->rank) { ?>
+                                    {{auth()->user()->rank}}º 
+                                <?php } else { ?>
+                                    <span style="font-size: 14px">Não Rankeado</span>
+                                <?php } ?>
+                                </span></span>
                             </div>
                         </div>
                         @if (config('features.tests'))

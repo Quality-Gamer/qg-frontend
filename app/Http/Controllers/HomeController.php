@@ -36,7 +36,7 @@ class HomeController extends Controller
             $user->setScoreAttribute(isset($body->response->score) ? $body->response->score : 0);
             $user->setUnivesityAttribute(isset($body->response->university->name) ? $body->response->university->name : '');
             $user->setColorAttribute($body->response->level->color);
-            $user->setRankAttribute($body->response->rank->id);
+            $user->setRankAttribute(isset($body, $body->response, $body->response->rank, $body->response->rank->id) ? $body->response->rank->id : null);
             $request->session()->put('user', $user);
             Auth::login($user);
         } else {
