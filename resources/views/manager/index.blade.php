@@ -39,8 +39,9 @@
         </div> -->
         <div class="d-none" id="end-game">
             <div align="center"><h2 class="title-card">Fim de Jogo</h2></div>
-                <div class="end-game text-blue">
-                    Pontos consquitados <span id="end-pts"></span> pts
+                <div align="center" class="end-game text-blue">
+                    <strong> Pontos consquitados </strong><br/>
+                    <span id="end-pts"></span> pts
                     <br/>
                     <button onclick="backToMain()" class="btn img-btn next-week-btn"><div>Voltar</div><img src="assets/img/icons/arrow.png" alt="Avançar ano" class="flip"> </button>
                 </div>
