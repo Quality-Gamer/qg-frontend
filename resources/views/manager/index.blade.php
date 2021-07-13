@@ -59,8 +59,8 @@
                     <div class="col-12 col-lg-6 col-sm-12 col-md-12 mt-sm-auto" style="max-height: 320px; height:auto;">
                         <div class="title-manager" style="display:flex;justify-content:center"><p class="manager-title" id="money-project"></p> <img class="icon-manager ml-3" src="assets/img/icons/money.png" alt="Dinheiro disponível"></div>
                         <div class="card card-manager">
-                            <div class="card-body">
-                                <h4 class="card-title mt-0 mb-1">Contratar</h4>
+                            <div class="card-body" style="overflow-y: scroll;height: 200px;">
+                                <h4 class="card-title mt-0 mb-1">Recursos</h4>
                                 <table class="table table-sm">
                                     <tbody>
                                         <div id="card-team" class="row">
@@ -74,8 +74,8 @@
                     <div class="col-12 col-lg-6 col-sm-12 col-md-12" style="max-height: 320px; height:auto">
                         <div class="title-manager" style="display:flex;justify-content:center"><p class="manager-title" id="clock-project"></p> <img class="icon-manager ml-3" src="assets/img/icons/clock.png" alt="Tempo disponível"></div>
                         <div class="card card-manager">
-                            <div class="card-body">
-                                <h4 class="card-title mt-0 mb-1">Processos</h4>
+                            <div class="card-body" style="overflow-y: scroll;height: 200px;">
+                                <h4 class="card-title mt-0 mb-1">Atividades</h4>
                                 <table class="table table-sm">
                                     <tbody id="card-actions">
                                     <div id="card-actions" class="row">
