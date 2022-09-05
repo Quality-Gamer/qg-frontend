@@ -56,7 +56,7 @@
                             src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFLZb6Cqdo&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
                           </iframe>
                     </div>
-                    <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFLZb6Cqdo&#x2F;view?utm_content=DAFLZb6Cqdo&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">up</a> de Iago Rodrigues Agualuza
+                    <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFLZb6Cqdo&#x2F;view?utm_content=DAFLZb6Cqdo&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">up</a> de Iago
                 </div>
         </div>
         <div class="d-none" id="manager">
