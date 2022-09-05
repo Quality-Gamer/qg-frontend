@@ -20,7 +20,7 @@
                 @endfor
             </div>
             <div align="center" id="week-title"><h2 class="title-card clear-week">Ano {{$week}}</h2></div>
-                <a onclick="changeToDescription()" class="badge btn-green badge-button mr-2 text-white">Descrição</a>
+                <a onclick="changeToDescription()" class="badge btn-green badge-button mr-2 text-white">Como Jogar?</a>
                 <a onclick="changeToManager()" class="badge btn-blue badge-button mr-2 text-white">Gerenciar</a>
                 <a onclick="changeToProject()" class="badge btn-pink badge-button mr-2 text-white">Projeto</a>
             <div class="mt-4">
@@ -47,9 +47,16 @@
                 </div>
         </div>
         <div class="d-none" id="description">
-            <div align="center"><h2 class="title-card">Descrição</h2></div>
+            <div align="center"><h2 class="title-card">Como Jogar?</h2></div>
                 <div>
-                    <?php echo isset($description) ? $description : '' ?>
+                    <div style="position: relative; width: 100%; height: 0; padding-top: 100.0000%;
+                         padding-bottom: 48px; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+                         border-radius: 8px; will-change: transform;">
+                          <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+                            src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFLZb6Cqdo&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+                          </iframe>
+                    </div>
+                    <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFLZb6Cqdo&#x2F;view?utm_content=DAFLZb6Cqdo&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">up</a> de Iago Rodrigues Agualuza
                 </div>
         </div>
         <div class="d-none" id="manager">
