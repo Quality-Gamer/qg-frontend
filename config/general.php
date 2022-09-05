@@ -3,7 +3,7 @@
    
 
 return [
-    'manager' => ['default' => "5ae967874a1751c25f9a84deaed987574f6f59fe"],
+    'manager' => ['default' => "c453914469524e81c4f76eff85e3e6cf9eda4247"],
 ]
   
 
