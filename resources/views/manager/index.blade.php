@@ -20,7 +20,7 @@
                 @endfor
             </div>
             <div align="center" id="week-title"><h2 class="title-card clear-week">Ano {{$week}}</h2></div>
-                <a onclick="changeToDescription()" class="badge btn-green badge-button mr-2 text-white">Como Jogar?</a>
+                <a onclick="changeToDescription()" class="badge btn-green badge-button mr-2 text-white">Regras</a>
                 <a onclick="changeToManager()" class="badge btn-blue badge-button mr-2 text-white">Gerenciar</a>
                 <a onclick="changeToProject()" class="badge btn-pink badge-button mr-2 text-white">Projeto</a>
             <div class="mt-4">
