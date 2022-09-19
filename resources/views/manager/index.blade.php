@@ -570,6 +570,7 @@
             return;
         }
 
+        load = 0;
         $.ajax({
             method: "GET",
             url: "/api/http/request",
