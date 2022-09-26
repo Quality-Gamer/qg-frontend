@@ -235,28 +235,27 @@
     }
 
     const changeToManager = () => {
-        if(!load){
-            
-            $.ajax({
-                method: "GET",
-                url: "/api/http/request",
-                crossDomain: true,
-                headers: {
-                    'Content-Type' : 'application/json',
-                },
-                data: { method: "POST", params : { ms: "manager", action: "get/store", params: {user_id: <?php echo Auth::user()->id ?>, match_id: '<?php echo $manager_id?>'}}},
-            }).done( r => {
-                var i = r.response[0];
-                i.forEach((item) => {
-                    appendItem(item);
-                });
-               $(".card-manager").css("width", "auto");
-                load = 1;
-            }).fail( (err) => {
-                console.log(err);
-                console.log(err.headers);
+        $.ajax({
+            method: "GET",
+            url: "/api/http/request",
+            crossDomain: true,
+            headers: {
+                'Content-Type' : 'application/json',
+            },
+            data: { method: "POST", params : { ms: "manager", action: "get/store", params: {user_id: <?php echo Auth::user()->id ?>, match_id: '<?php echo $manager_id?>'}}},
+        }).done( r => {
+            $("#card-team").empty();
+            $("#card-actions").empty();
+            var i = r.response[0];
+            i.forEach((item) => {
+                appendItem(item);
             });
-        }
+           $(".card-manager").css("width", "auto");
+            load = 1;
+        }).fail( (err) => {
+            console.log(err);
+            console.log(err.headers);
+        });
 
         $("#main").hide();
         $("#manager").show();
