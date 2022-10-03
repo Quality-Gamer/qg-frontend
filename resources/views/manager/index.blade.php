@@ -59,13 +59,7 @@
                     <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFLZb6Cqdo&#x2F;view?utm_content=DAFLZb6Cqdo&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">up</a> de Iago
                 </div>
                 <div>
-                <div style="position: relative; width: 100%; height: 0; padding-top: 100.0000%;
-                         padding-bottom: 48px; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
-                         border-radius: 8px; will-change: transform;">
-                          <video>
-                            <source src="assets/video.mov" type="video/mov">
-                          </video>
-                    </div>
+                <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/ta9l_N_Pltw?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
         </div>
         <div class="d-none" id="manager">
