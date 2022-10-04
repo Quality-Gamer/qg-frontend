@@ -9,7 +9,7 @@ return [
     "badges" => false,
     "coin" => false,
     "social" => false,
-    "ranking" => true,
+    "ranking" => false,
 ]
 
   
