@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
 COPY . .
 
 # Instale as dependências do Laravel usando o Composer
-RUN composer install
+RUN php /usr/local/bin/composer install
 
 # Defina as permissões corretas para os diretórios de armazenamento e cache do Laravel
 RUN chown -R www-data:www-data storage bootstrap/cache
