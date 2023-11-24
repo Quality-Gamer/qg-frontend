@@ -1,28 +1,27 @@
-# Use uma imagem base com PHP 7.4 e Apache
-FROM php:7.4-apache
+# Use a imagem oficial do PHP para Laravel no Render
+FROM ghcr.io/render-examples/laravel:latest
 
-# Defina o diretório de trabalho para /var/www/html
+# Defina o diretório de trabalho para o diretório do aplicativo Laravel
 WORKDIR /var/www/html
 
-# Atualize e instale as dependências necessárias (incluindo o Composer)
-RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    && rm -rf /var/lib/apt/lists/* \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Copie o código do projeto Laravel para o contêiner
+# Copie os arquivos do projeto para o contêiner
 COPY . .
 
-# Instale as dependências do Laravel usando o Composer
-RUN php /usr/local/bin/composer install
+# Instale as dependências do Composer
+RUN composer install --optimize-autoloader --no-dev
 
-# Defina as permissões corretas para os diretórios de armazenamento e cache do Laravel
-RUN chown -R www-data:www-data storage bootstrap/cache
-RUN chmod -R 775 storage bootstrap/cache
+# Copie o arquivo de ambiente
+COPY .env.example .env
 
-# Exponha a porta 80 para o servidor web
-EXPOSE 80
+# Gere a chave de aplicativo Laravel
+RUN php artisan key:generate
 
-# Inicie o servidor Apache
-CMD ["apache2-foreground"]
+# Limpe o cache do Laravel
+RUN php artisan config:cache
+RUN php artisan route:cache
+
+# Exponha a porta 8080 para tráfego web
+EXPOSE 8080
+
+# Inicie o servidor web embutido do Laravel
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
