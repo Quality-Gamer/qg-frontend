@@ -1,27 +1,20 @@
-# Use a imagem oficial do PHP para Laravel no Render
-FROM ghcr.io/render-examples/laravel:latest
+FROM richarvey/nginx-php-fpm:1.9.1
 
-# Defina o diretório de trabalho para o diretório do aplicativo Laravel
-WORKDIR /var/www/html
-
-# Copie os arquivos do projeto para o contêiner
 COPY . .
 
-# Instale as dependências do Composer
-RUN composer install --optimize-autoloader --no-dev
+# Image config
+ENV SKIP_COMPOSER 1
+ENV WEBROOT /var/www/html/public
+ENV PHP_ERRORS_STDERR 1
+ENV RUN_SCRIPTS 1
+ENV REAL_IP_HEADER 1
 
-# Copie o arquivo de ambiente
-COPY .env.example .env
+# Laravel config
+ENV APP_ENV production
+ENV APP_DEBUG false
+ENV LOG_CHANNEL stderr
 
-# Gere a chave de aplicativo Laravel
-RUN php artisan key:generate
+# Allow composer to run as root
+ENV COMPOSER_ALLOW_SUPERUSER 1
 
-# Limpe o cache do Laravel
-RUN php artisan config:cache
-RUN php artisan route:cache
-
-# Exponha a porta 8080 para tráfego web
-EXPOSE 8080
-
-# Inicie o servidor web embutido do Laravel
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
+CMD ["/start.sh"]
