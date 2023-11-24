@@ -13,6 +13,8 @@ COPY . .
 # Instale as dependências do Composer
 RUN composer install --optimize-autoloader --no-dev
 
+RUN composer update
+
 # Copie o arquivo de ambiente
 COPY .env.example .env
 
