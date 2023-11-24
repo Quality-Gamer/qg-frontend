@@ -1,32 +1,28 @@
-# Use a imagem base com PHP e Laravel
-FROM shinsenter/laravel
+# Use uma imagem base com PHP 7.4 e Apache
+FROM php:7.4-apache
 
-# Adicione o download e instalação do Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Defina o diretório de trabalho para o diretório do aplicativo Laravel
+# Defina o diretório de trabalho para /var/www/html
 WORKDIR /var/www/html
 
-# Copie os arquivos do projeto para o contêiner
+# Atualize e instale as dependências necessárias (incluindo o Composer)
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    && rm -rf /var/lib/apt/lists/* \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Copie o código do projeto Laravel para o contêiner
 COPY . .
 
-# Instale as dependências do Composer
-RUN composer install --optimize-autoloader --no-dev
+# Instale as dependências do Laravel usando o Composer
+RUN composer install
 
-RUN composer update
+# Defina as permissões corretas para os diretórios de armazenamento e cache do Laravel
+RUN chown -R www-data:www-data storage bootstrap/cache
+RUN chmod -R 775 storage bootstrap/cache
 
-# Copie o arquivo de ambiente
-COPY .env.example .env
-
-# Gere a chave de aplicativo Laravel
-RUN php artisan key:generate
-
-# Limpe o cache do Laravel
-RUN php artisan config:cache
-RUN php artisan route:cache
-
-# Exponha a porta 80 para tráfego web
+# Exponha a porta 80 para o servidor web
 EXPOSE 80
 
-# Inicie o servidor web embutido do Laravel
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=80"]
+# Inicie o servidor Apache
+CMD ["apache2-foreground"]
