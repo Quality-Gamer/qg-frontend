@@ -1,6 +1,9 @@
 # Use a imagem base com PHP e Laravel
 FROM shinsenter/laravel
 
+# Adicione o download e instalação do Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
 # Defina o diretório de trabalho para o diretório do aplicativo Laravel
 WORKDIR /var/www/html
 
